@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ServiceModel;
+using System.Security.Principal;
+using System.IdentityModel.Policy;
 
 namespace Servis
 {
@@ -16,9 +18,15 @@ namespace Servis
         public void StartService()
         {
             NetTcpBinding binding = new NetTcpBinding();
+            //aj sad cu ja pushovati ovo, pa ti samo skini ili sync
+            binding.Security.Mode = SecurityMode.Transport;
+            binding.Security.Transport.ProtectionLevel = System.Net.Security.ProtectionLevel.EncryptAndSign;
+            binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Windows;
 
             host = new ServiceHost(typeof(AdminService));
             host.AddServiceEndpoint(typeof(IMainService), binding, Config.AdminServiceAddress);
+
+            host.Authorization.ServiceAuthorizationManager = new MyServiceAuthorizationManager();
 
             host.Open();
 
