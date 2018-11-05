@@ -15,10 +15,41 @@ namespace Admins
             using (AdminProxy proxy = new AdminProxy(new NetTcpBinding(), Config.AdminServiceAddress))
             {
                 proxy.AddUser();
-                proxy.CreateDB("testBaza");
+                int op = -1;
+
+                while (op != 0) {
+                    op = DisplayAdminMenu();
+
+                    switch (op) {
+                        case 1:
+                            Console.WriteLine("Unesi naziv baze:");
+                            proxy.CreateDB(Console.ReadLine());
+                            break;
+                        case 2:
+                            Console.WriteLine("Unesi naziv baze za brisanje:");
+                            proxy.DeleteDB(Console.ReadLine());
+                            break;
+                        case 0:
+                            Console.WriteLine("POYYY");
+                            break;
+                    }
+                }
+            }
+        }
+
+        static int DisplayAdminMenu() {
+            int option = -1;
+
+            while (option < 0 || option > 2) {
+                Console.WriteLine("========MENI========");
+                Console.WriteLine("1 Napravi bazu");
+                Console.WriteLine("2 Obrisi bazu");
+                Console.WriteLine("0 Izidji");
+                Console.WriteLine(">");
+                option = int.Parse(Console.ReadLine());
             }
 
-            Console.ReadLine();
+            return option;
         }
     }
 }
