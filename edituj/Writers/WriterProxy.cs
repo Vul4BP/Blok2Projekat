@@ -31,5 +31,12 @@ namespace Writers
                 return "";
             }
         }
+        public bool CreateDB(string name) {
+            return false;
+        }
+
+        public bool DeleteDB(string name) {
+            return false;
+        }
     }
 }

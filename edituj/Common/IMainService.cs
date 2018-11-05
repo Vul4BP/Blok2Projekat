@@ -11,6 +11,11 @@ namespace Common
     public interface IMainService
     {
         [OperationContract]
+        bool CreateDB(string name);
+        [OperationContract]
+        bool DeleteDB(string name);
+        [OperationContract]
         string AddUser();
+       
     }
 }

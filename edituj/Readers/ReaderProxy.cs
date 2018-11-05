@@ -31,5 +31,31 @@ namespace Readers
                 return "";
             }
         }
+
+        public bool CreateDB(string name)
+        {
+            try
+            {
+                return factory.CreateDB(name);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error: {0}", e.Message);
+                return false;
+            }
+        }
+
+        public bool DeleteDB(string name)
+        {
+            try
+            {
+                return factory.DeleteDB(name);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error: {0}", e.Message);
+                return false;
+            }
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace Admins
             using (AdminProxy proxy = new AdminProxy(new NetTcpBinding(), Config.AdminServiceAddress))
             {
                 proxy.AddUser();
+                proxy.CreateDB("testBaza");
             }
 
             Console.ReadLine();

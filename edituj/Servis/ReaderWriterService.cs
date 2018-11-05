@@ -41,5 +41,14 @@ namespace Servis
             Console.WriteLine("Cao REaderWriter");
             return "Cao ReaderWriter";
         }
+
+        //nije potrebno implementirati
+        public bool CreateDB(string name) {
+            return false;
+        }
+
+        public bool DeleteDB(string name) {
+            return false;
+        }
     }
 }

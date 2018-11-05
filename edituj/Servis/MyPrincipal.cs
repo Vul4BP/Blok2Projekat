@@ -16,12 +16,12 @@ namespace Servis {
             Identity = wi;
             ListOfRoles = new List<Role>();
             ListOfGroups = new List<String>();
-            popuniRole();
+            InitRoles();
 
             foreach (IdentityReference group in wi.Groups) {
                 SecurityIdentifier sid = (SecurityIdentifier)group.Translate(typeof(SecurityIdentifier));
                 var name = sid.Translate(typeof(NTAccount));
-                ListOfGroups.Add(name.ToString());
+                ListOfGroups.Add(name.ToString()); 
             }
         }
 
@@ -35,18 +35,8 @@ namespace Servis {
             return false;
         }
 
-        public Roles getRole(string name) {
-            if (name.Equals("Reader")) {
-                return Roles.Reader;
-            } else if (name.Equals("Modifier")) {
-                return Roles.Modifier;
-            } else if (name.Equals("Admin")) {
-                return Roles.Administrator;
-            } else
-                return Roles.Error;
-        }
-
-        public void popuniRole() {
+        public void InitRoles() {
+            /*
             Role readRole = new Role(Roles.Reader);
             readRole.listOfPrms.Add(Prms.Read);
 
@@ -61,7 +51,15 @@ namespace Servis {
 
             ListOfRoles.Add(readRole);
             ListOfRoles.Add(modifyRole);
-            ListOfRoles.Add(adminRole);
+            ListOfRoles.Add(adminRole);*/
+
+            Role adminRole = new Role(Roles.Krompir); //ovde se pravi "Rola"
+            adminRole.listOfPrms.Add(Prms.CreateDB);     // i dodaju joj se PRMS- tj koje metode moze da radit
+            adminRole.listOfPrms.Add(Prms.DeleteDB);
+            
+            //[PrincipalPermission(SecurityAction.Demand, Role = "Admini")
+            
+
         }
     }
 }

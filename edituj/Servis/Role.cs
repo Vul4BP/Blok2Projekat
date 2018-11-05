@@ -5,8 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Servis {
-    public enum Roles { Reader = 1, Modifier, Administrator, Error };
-    public enum Prms { Read = 1, Modify, Delete, Execute, Administrate };
+
+    public enum Roles {
+        Krompir = 1      //krompir jer "admin" grupa ce uvek postojati na kompu, zato Krompir = Admin
+    };    
+    public enum Prms {
+        CreateDB = 1,
+        DeleteDB
+    };
+
     public class Role {
         public Role(Roles cr) {
             currentRole = cr;

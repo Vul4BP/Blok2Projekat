@@ -5,6 +5,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Admins
 {
@@ -14,9 +15,7 @@ namespace Admins
 
         public AdminProxy(NetTcpBinding binding, string address) : base(binding, address)
         {
-            binding.Security.Mode = SecurityMode.Transport;
-            binding.Security.Transport.ProtectionLevel = System.Net.Security.ProtectionLevel.EncryptAndSign;
-            binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Windows;
+            binding = HelperFunctions.SetBindingSecurity(binding);
 
             this.Credentials.Windows.AllowedImpersonationLevel = System.Security.Principal.TokenImpersonationLevel.Impersonation;
             factory = this.CreateChannel();
@@ -35,6 +34,34 @@ namespace Admins
                 Console.WriteLine("Error: {0}", e.Message);
                 return "";
             }
+        }
+
+        public bool CreateDB(string name) {
+            bool retVal = false;
+            try
+            {
+                factory.CreateDB(name);
+                retVal = true;
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return retVal;
+        }
+
+        public bool DeleteDB(string name) {
+            bool retVal = false;
+            try
+            {
+                factory.DeleteDB(name);
+                retVal = true;
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return retVal;   
         }
     }
 }
