@@ -14,6 +14,11 @@ namespace Admins
 
         public AdminProxy(NetTcpBinding binding, string address) : base(binding, address)
         {
+            binding.Security.Mode = SecurityMode.Transport;
+            binding.Security.Transport.ProtectionLevel = System.Net.Security.ProtectionLevel.EncryptAndSign;
+            binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Windows;
+
+            this.Credentials.Windows.AllowedImpersonationLevel = System.Security.Principal.TokenImpersonationLevel.Impersonation;
             factory = this.CreateChannel();
         }
 
