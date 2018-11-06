@@ -1,4 +1,4 @@
-cd C:\Program Files (x86)\Windows Kits\10\bin\10.0.16299.0\x86
+cd C:\Program Files (x86)\Windows Resource Kits\Tools
 
 set username1=testReader
 set username1L=testreader
