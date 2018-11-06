@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ServiceModel;
 using Common;
+using Manager;
+using System.Security.Principal;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Writers
 {
@@ -12,8 +15,17 @@ namespace Writers
     {
         IMainService factory;
 
-        public WriterProxy(NetTcpBinding binding, string address) : base(binding, address)
+        public WriterProxy(NetTcpBinding binding, EndpointAddress address) : base(binding, address)
         {
+            string cltCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
+
+            this.Credentials.ServiceCertificate.Authentication.CertificateValidationMode = System.ServiceModel.Security.X509CertificateValidationMode.Custom;
+            this.Credentials.ServiceCertificate.Authentication.CustomCertificateValidator = new ClientCertValidator();
+            this.Credentials.ServiceCertificate.Authentication.RevocationMode = X509RevocationMode.NoCheck;
+
+            /// Set appropriate client's certificate on the channel. Use CertManager class to obtain the certificate based on the "cltCertCN"
+            this.Credentials.ClientCertificate.Certificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, cltCertCN);
+
             factory = this.CreateChannel();
         }
 
@@ -61,6 +73,7 @@ namespace Writers
             try
             {
                 factory.WriteDB(name,txt);
+                Console.WriteLine("Servis mi je odgovorio jeeej");
                 retVal = true;
             }
             catch (Exception e)

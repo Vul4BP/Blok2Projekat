@@ -46,5 +46,11 @@
     <Compile Include="IMainService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Manager\Manager.csproj">
+      <Project>{f73ddda5-125e-4d54-8249-0c0874fddbcd}</Project>
+      <Name>Manager</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

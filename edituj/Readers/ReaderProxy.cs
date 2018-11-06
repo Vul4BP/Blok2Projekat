@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ServiceModel;
 using Common;
+using Manager;
+using System.Security.Principal;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Readers
 {
@@ -12,8 +15,17 @@ namespace Readers
     {
         IMainService factory;
 
-        public ReaderProxy(NetTcpBinding binding, string address) : base(binding, address)
+        public ReaderProxy(NetTcpBinding binding, EndpointAddress address) : base(binding, address)
         {
+            string cltCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
+
+            this.Credentials.ServiceCertificate.Authentication.CertificateValidationMode = System.ServiceModel.Security.X509CertificateValidationMode.Custom;
+            this.Credentials.ServiceCertificate.Authentication.CustomCertificateValidator = new ClientCertValidator();
+            this.Credentials.ServiceCertificate.Authentication.RevocationMode = X509RevocationMode.NoCheck;
+
+            /// Set appropriate client's certificate on the channel. Use CertManager class to obtain the certificate based on the "cltCertCN"
+            this.Credentials.ClientCertificate.Certificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, cltCertCN);
+
             factory = this.CreateChannel();
         }
 
@@ -64,6 +76,7 @@ namespace Readers
             try
             {
                 factory.ReadDB(name);
+                Console.WriteLine("Kao nesto sam procitao... :(");
                 retVal = true;
             }
             catch (Exception e)
