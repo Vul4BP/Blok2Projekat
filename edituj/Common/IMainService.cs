@@ -14,6 +14,12 @@ namespace Common
         bool CreateDB(string name);
         [OperationContract]
         bool DeleteDB(string name);
-       
+        [OperationContract]
+        bool WriteDB(string name,string txt);
+        [OperationContract]
+        bool EditDB(string name, string txt);
+        [OperationContract]
+        bool ReadDB(string name);
+
     }
 }

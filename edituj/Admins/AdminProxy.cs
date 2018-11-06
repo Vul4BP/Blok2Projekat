@@ -48,5 +48,20 @@ namespace Admins
             }
             return retVal;   
         }
+
+        public bool EditDB(string name, string txt)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ReadDB(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool WriteDB(string name, string txt)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

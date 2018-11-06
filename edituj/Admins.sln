@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger", "Logger\Logger.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{734B9B60-B0AA-4315-A624-CF486FBD130E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manager", "Manager\Manager.csproj", "{F73DDDA5-125E-4D54-8249-0C0874FDDBCD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{734B9B60-B0AA-4315-A624-CF486FBD130E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{734B9B60-B0AA-4315-A624-CF486FBD130E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{734B9B60-B0AA-4315-A624-CF486FBD130E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F73DDDA5-125E-4D54-8249-0C0874FDDBCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F73DDDA5-125E-4D54-8249-0C0874FDDBCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F73DDDA5-125E-4D54-8249-0C0874FDDBCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F73DDDA5-125E-4D54-8249-0C0874FDDBCD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

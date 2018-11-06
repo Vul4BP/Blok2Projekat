@@ -14,7 +14,7 @@ namespace Readers
         {
             using (ReaderProxy proxy = new ReaderProxy(new NetTcpBinding(), Config.ReaderWriterServiceAddress))
             {
-                proxy.AddUser();
+                //proxy.AddUser();
             }
 
             Console.ReadLine();

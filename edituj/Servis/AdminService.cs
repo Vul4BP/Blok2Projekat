@@ -79,5 +79,26 @@ namespace Servis
             }
             return retVal;          
         }
+
+        public bool WriteDB(string name, string txt)
+        {
+            Console.WriteLine("Write");
+            return true;
+            //throw new NotImplementedException();
+        }
+
+        public bool EditDB(string name, string txt)
+        {
+            //throw new NotImplementedException();
+            Console.WriteLine("Edit");
+            return true;
+        }
+
+        public bool ReadDB(string name)
+        {
+            Console.WriteLine("Read");
+            return true;
+            //throw new NotImplementedException();
+        }
     }
 }
