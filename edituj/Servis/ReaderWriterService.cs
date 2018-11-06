@@ -26,7 +26,7 @@ namespace Servis
             */
 
             string srvCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
-
+            Console.WriteLine(srvCertCN);
             NetTcpBinding binding = new NetTcpBinding();
             binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
 
