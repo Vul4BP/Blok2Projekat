@@ -36,11 +36,6 @@ namespace Servis
                 Console.WriteLine(ServiceName + " error");
             }
         }
-        public string AddUser()
-        {
-            Console.WriteLine("Cao REaderWriter");
-            return "Cao ReaderWriter";
-        }
 
         //nije potrebno implementirati
         public bool CreateDB(string name) {

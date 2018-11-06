@@ -19,7 +19,7 @@ namespace Servis {
             //string group = string.Format("{0}\\Viewer", Environment.MachineName);
             //string group = string.Format("{0}", Environment.MachineName);
 
-            if (principal.IsInRole("Reader")) {
+            if (principal.IsInRole("Krompir")) {
                 return true;
             }
 

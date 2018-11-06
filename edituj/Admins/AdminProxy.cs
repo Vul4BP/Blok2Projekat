@@ -21,21 +21,6 @@ namespace Admins
             factory = this.CreateChannel();
         }
 
-        public string AddUser()
-        {
-            try
-            {
-                string s = factory.AddUser();
-                Console.WriteLine(s);
-                return s;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Error: {0}", e.Message);
-                return "";
-            }
-        }
-
         public bool CreateDB(string name) {
             bool retVal = false;
             try

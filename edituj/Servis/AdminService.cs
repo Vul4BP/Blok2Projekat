@@ -49,12 +49,6 @@ namespace Servis
             }
         }
 
-        public string AddUser()
-        {
-            Console.WriteLine("Cao Admin");
-            return "Cao Admin";
-        }
-
         [PrincipalPermission(SecurityAction.Demand, Role = "Krompir")] 
         public bool CreateDB(string name) {
             bool retVal = false;
