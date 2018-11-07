@@ -70,6 +70,21 @@ namespace Readers
             return retVal;
         }
 
+        public bool MaxIncomeByCountry()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool MedianMonthlyIncomeByCity(string city)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool MedianMonthlyIncome(string country, int year)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool ReadDB(string name)
         {
             bool retVal = false;

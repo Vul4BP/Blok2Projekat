@@ -20,6 +20,11 @@ namespace Common
         bool EditDB(string name, string txt);
         [OperationContract]
         bool ReadDB(string name);
-
+        [OperationContract]
+        bool MedianMonthlyIncomeByCity(string city);
+        [OperationContract]
+        bool MedianMonthlyIncome(string country, int year);
+        [OperationContract]
+        bool MaxIncomeByCountry();
     }
 }
