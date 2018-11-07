@@ -49,7 +49,7 @@ namespace Servis
             }
         }
 
-        [PrincipalPermission(SecurityAction.Demand, Role = "Krompir")] 
+        [PrincipalPermission(SecurityAction.Demand, Role = "Krompir")]
         public bool CreateDB(string name) {
             bool retVal = false;
             try
@@ -65,7 +65,7 @@ namespace Servis
             return retVal;
         }
 
-        [PrincipalPermission(SecurityAction.Demand, Role = "Krompir")]  
+        [PrincipalPermission(SecurityAction.Demand, Role = "Krompir")]
         public bool DeleteDB(string name) {
             bool retVal = false;
             try

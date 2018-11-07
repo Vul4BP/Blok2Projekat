@@ -23,5 +23,7 @@ namespace Common
         public readonly static string ReaderWriterServiceAddress = "net.tcp://" + ReaderWriterHost + ":" + ReaderWriterPort + "/" + ReaderWriterEndpoint;
 
         public readonly static string ServiceCertificateCN = "testServis";
+
+        public readonly static string PermissionsConfigPath = "permissions.cfg";
     }
 }

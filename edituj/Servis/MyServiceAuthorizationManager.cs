@@ -20,7 +20,7 @@ namespace Servis {
             //string group = string.Format("{0}", Environment.MachineName);
 
             if (principal.IsInRole("Krompir")) {
-                return true;
+                authorized = true;
             }
 
 
