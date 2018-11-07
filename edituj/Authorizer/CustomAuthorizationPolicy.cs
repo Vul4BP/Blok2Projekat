@@ -7,7 +7,7 @@ using System.IdentityModel.Policy;
 using System.IdentityModel.Claims;
 using System.Security.Principal;
 
-namespace Servis {
+namespace Authorizer {
     public class CustomAuthorizationPolicy : IAuthorizationPolicy {
         private string id;
         private object locker = new object();
@@ -25,7 +25,6 @@ namespace Servis {
         }
 
         public bool Evaluate(EvaluationContext evaluationContext, ref object state) {
-            //------------------------------------------
             object list;
 
             if (!evaluationContext.Properties.TryGetValue("Identities", out list))  //provera da li je prosla windows autorizacija
@@ -37,8 +36,7 @@ namespace Servis {
             if (list == null || identities.Count <= 0) {
                 return false;
             }
-
-            //------------------------------------------
+            
             //ako je proslo, kreira se principal
             evaluationContext.Properties["Principal"] = GetPrincipal(identities[0]);
             return true;

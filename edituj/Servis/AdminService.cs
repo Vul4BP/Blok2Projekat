@@ -9,6 +9,7 @@ using System.Security.Principal;
 using System.Security.Permissions;
 using System.IdentityModel.Policy;
 using System.IO;
+using Authorizer;
 
 namespace Servis
 {
@@ -28,8 +29,9 @@ namespace Servis
 
             host.Authorization.ServiceAuthorizationManager = new MyServiceAuthorizationManager();
 
-            List<IAuthorizationPolicy> policies = new List<IAuthorizationPolicy>();
-            policies.Add(new CustomAuthorizationPolicy());
+            List<IAuthorizationPolicy> policies = new List<IAuthorizationPolicy> {
+                new CustomAuthorizationPolicy()
+            };
             host.Authorization.ExternalAuthorizationPolicies = policies.AsReadOnly();
             
             host.Open();

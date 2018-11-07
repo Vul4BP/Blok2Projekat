@@ -29,5 +29,33 @@ namespace Common
 
             return new Tuple<NetTcpBinding, EndpointAddress>(binding, address);
         }
+
+        public static Roles RoleFromString(string txt) {
+            var tmp = txt.Trim().ToLower();
+            if (tmp == "admin") {
+                return Roles.Admin;
+            } else if (tmp == "reader") {
+                return Roles.Reader;
+            } else if (tmp == "writer") {
+                return Roles.Writer;
+            }
+            throw new Exception("Role parsing error");
+        }
+
+        public static Permissions PermissionFromString(string txt) {
+            var tmp = txt.Trim().ToLower();
+            if (tmp == "createdb") {
+                return Permissions.CreateDB;
+            } else if (tmp == "deletedb") {
+                return Permissions.DeleteDB;
+            } else if (tmp == "readdb") {
+                return Permissions.ReadDB;
+            } else if (tmp == "writedb") {
+                return Permissions.WriteDB;
+            } else if (tmp == "editdb") {
+                return Permissions.EditDB;
+            }
+            throw new Exception("Permission parsing error");
+        }
     }
 }

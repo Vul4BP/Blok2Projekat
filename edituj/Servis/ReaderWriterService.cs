@@ -49,8 +49,14 @@ namespace Servis
             host.Credentials.ServiceCertificate.Certificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, srvCertCN);
             /// host.Credentials.ServiceCertificate.Certificate = CertManager.GetCertificateFromFile("WCFService.pfx");
 
-            host.Open();
-            Console.WriteLine(ServiceName + " service started.");
+            if (host.Credentials.ServiceCertificate.Certificate == null) {
+                Console.WriteLine("Certificate does not exist: CN=" + srvCertCN);
+                Console.WriteLine(ServiceName + " stopped");
+                host = null;
+            } else {
+                host.Open();
+                Console.WriteLine(ServiceName + " service started.");
+            }
         }
 
         public void StopService()

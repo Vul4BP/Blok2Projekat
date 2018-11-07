@@ -62,25 +62,25 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdminService.cs" />
-    <Compile Include="CustomAuthorizationPolicy.cs" />
-    <Compile Include="MyPrincipal.cs" />
-    <Compile Include="MyServiceAuthorizationManager.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReaderWriterService.cs" />
-    <Compile Include="Role.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Authorizer\Authorizer.csproj">
+      <Project>{29f2d9bf-a551-4e79-a16c-232e3a09ecd1}</Project>
+      <Name>Authorizer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Common\Common.csproj">
       <Project>{734b9b60-b0aa-4315-a624-cf486fbd130e}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Manager\Manager.csproj">
+    <ProjectReference Include="..\Manager\CertManager.csproj">
       <Project>{f73ddda5-125e-4d54-8249-0c0874fddbcd}</Project>
-      <Name>Manager</Name>
+      <Name>CertManager</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

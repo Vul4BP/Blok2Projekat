@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Principal;
 
-namespace Servis {
+namespace Authorizer {
     public class MyPrincipal : IPrincipal {
         public IIdentity Identity { get; set; }
         public List<Role> ListOfRoles { get; set; }
@@ -36,9 +36,9 @@ namespace Servis {
         }
 
         public void InitRoles() {
-            Role adminRole = new Role(Roles.Admin);
-            Role readerRole = new Role(Roles.Reader);
-            Role writerRole = new Role(Roles.Writer);
+            Role adminRole = new Role(Common.Roles.Admin);
+            Role readerRole = new Role(Common.Roles.Reader);
+            Role writerRole = new Role(Common.Roles.Writer);
         }
     }
 }

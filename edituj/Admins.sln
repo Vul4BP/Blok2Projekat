@@ -15,7 +15,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logger", "Logger\Logger.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{734B9B60-B0AA-4315-A624-CF486FBD130E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Manager", "Manager\Manager.csproj", "{F73DDDA5-125E-4D54-8249-0C0874FDDBCD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CertManager", "Manager\CertManager.csproj", "{F73DDDA5-125E-4D54-8249-0C0874FDDBCD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorizer", "Authorizer\Authorizer.csproj", "{29F2D9BF-A551-4E79-A16C-232E3A09ECD1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{F73DDDA5-125E-4D54-8249-0C0874FDDBCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F73DDDA5-125E-4D54-8249-0C0874FDDBCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F73DDDA5-125E-4D54-8249-0C0874FDDBCD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29F2D9BF-A551-4E79-A16C-232E3A09ECD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29F2D9BF-A551-4E79-A16C-232E3A09ECD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29F2D9BF-A551-4E79-A16C-232E3A09ECD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29F2D9BF-A551-4E79-A16C-232E3A09ECD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

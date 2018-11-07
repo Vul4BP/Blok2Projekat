@@ -26,4 +26,17 @@ namespace Common
 
         public readonly static string PermissionsConfigPath = "permissions.cfg";
     }
+
+    public enum Roles {
+        Admin = 1,
+        Reader,
+        Writer
+    };
+    public enum Permissions {
+        CreateDB = 1,
+        DeleteDB,
+        ReadDB,
+        WriteDB,
+        EditDB
+    };
 }

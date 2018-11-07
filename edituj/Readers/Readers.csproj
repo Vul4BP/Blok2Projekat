@@ -56,9 +56,9 @@
       <Project>{734b9b60-b0aa-4315-a624-cf486fbd130e}</Project>
       <Name>Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Manager\Manager.csproj">
+    <ProjectReference Include="..\Manager\CertManager.csproj">
       <Project>{f73ddda5-125e-4d54-8249-0c0874fddbcd}</Project>
-      <Name>Manager</Name>
+      <Name>CertManager</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

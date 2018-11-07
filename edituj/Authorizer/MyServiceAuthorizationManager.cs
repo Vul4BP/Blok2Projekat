@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Security.Principal;
 using System.ServiceModel;
 
-namespace Servis {
+namespace Authorizer {
     public class MyServiceAuthorizationManager : ServiceAuthorizationManager {
         protected override bool CheckAccessCore(OperationContext operationContext) {
             //WindowsPrincipal p = new WindowsPrincipal(operationContext.ServiceSecurityContext.WindowsIdentity);

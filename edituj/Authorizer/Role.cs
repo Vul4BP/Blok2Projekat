@@ -6,21 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Common;
 
-namespace Servis {
-
-    public enum Roles {
-        Admin = 1,
-        Reader,
-        Writer
-    };    
-    public enum Permissions {
-        CreateDB = 1,
-        DeleteDB,
-        ReadDB,
-        WriteDB,
-        EditDB
-    };
-
+namespace Authorizer {
+    
     public class Role {
 
         private static Dictionary<Roles, List<Permissions>> PermissionsForRoles = null;
@@ -31,17 +18,16 @@ namespace Servis {
         }
 
         public Role(Roles cr) {
-            currentRole = cr;
-            GrantedPermissions = PermissionsForRoles[currentRole];
+            CurrentRole = cr;
+            GrantedPermissions = PermissionsForRoles[CurrentRole];
         }
 
-        public Roles currentRole { get; set; }
+        public Roles CurrentRole { get; set; }
         public List<Permissions> GrantedPermissions { get; set; }
 
         private static Dictionary<Roles, List<Permissions>> LoadPermissionsFromFile(string filePath)
         {
             var returnValue = new Dictionary<Roles, List<Permissions>>();
-
             string textFromFile = "FILE_ERROR";
 
             using (StreamReader sr = new StreamReader(Config.PermissionsConfigPath))
@@ -74,8 +60,8 @@ namespace Servis {
                     continue;
                 }
 
-                Roles tmpRole = RoleFromString(parsedData[0]);
-                Permissions tmpPerm = PermissionFromString(parsedData[1]);
+                Roles tmpRole = HelperFunctions.RoleFromString(parsedData[0]);
+                Permissions tmpPerm = HelperFunctions.PermissionFromString(parsedData[1]);
 
                 if (returnValue.ContainsKey(tmpRole))
                 {
@@ -86,51 +72,8 @@ namespace Servis {
                     returnValue[tmpRole].Add(tmpPerm);
                 }
             }
-
-
+            
             return returnValue;
-        }
-
-        private static Roles RoleFromString(string txt)
-        {
-            var tmp = txt.Trim().ToLower();
-            if (tmp == "admin")
-            {
-                return Roles.Admin;
-            } else if (tmp == "reader")
-            {
-                return Roles.Reader;
-            } else if (tmp == "writer")
-            {
-                return Roles.Writer;
-            }
-            throw new InvalidDataException("Role parsing error");
-        }
-
-        private static Permissions PermissionFromString(string txt)
-        {
-            var tmp = txt.Trim().ToLower();
-            if (tmp == "createdb")
-            {
-                return Permissions.CreateDB;
-            }
-            else if (tmp == "deletedb")
-            {
-                return Permissions.DeleteDB;
-            }
-            else if (tmp == "readdb")
-            {
-                return Permissions.ReadDB;
-            }
-            else if (tmp == "writedb")
-            {
-                return Permissions.WriteDB;
-            }
-            else if (tmp == "editdb")
-            {
-                return Permissions.EditDB;
-            }
-            throw new InvalidDataException("Permission parsing error");
         }
     }
 
