@@ -12,6 +12,8 @@ namespace Database {
         public string Name { get; set; }
         public Dictionary<int, Element> Elements = null;
 
+        //trebace negde if (!Directory.Exists(@"C:\my\dir")) Directory.CreateDirectory(@"C:\my\dir");
+
         public Database (string name) {
             Name = name;
             Elements = LoadFromDisk();
@@ -37,6 +39,27 @@ namespace Database {
                 SaveToDisk();
                 return true;
             } else {
+                return false;
+            }
+        }
+
+        public bool DeleteDB() {
+            if (!ArchiveDatabase()) {
+                return false;
+            }
+            try {
+                File.Delete(Name);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        }
+
+        private bool ArchiveDatabase() {
+            try {
+                File.Copy(Name, Name.Split('.')[0] + "_arh.xml");
+                return true;
+            } catch (Exception e) {
                 return false;
             }
         }
@@ -116,8 +139,13 @@ namespace Database {
             List<Element> allElements = null;
             XmlSerializer deserializer = new XmlSerializer(typeof(List<Element>));
 
-            using (StreamReader sr = new StreamReader(Name)) {
-                allElements = (List<Element>)deserializer.Deserialize(sr);
+            try {
+                using (StreamReader sr = new StreamReader(Name)) {
+                    allElements = (List<Element>)deserializer.Deserialize(sr);
+                }
+            } catch (Exception e) {
+                Console.WriteLine("Database LoadFromDisk: " + e.ToString());
+                return new Dictionary<int, Element>();
             }
             
             if (allElements == null) {

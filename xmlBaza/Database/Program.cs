@@ -10,7 +10,7 @@ namespace Database {
 
             //ako nemas fajl pokreni ovaj kod
             //kad napravi fajl onda opet zakomentarisi i treba da bude isti rezultat
-            /*Element el = Element.LoadFromConsole();
+            //Element el = Element.LoadFromConsole();
             Element el2 = new Element() { Id = 2, Age = 22, City = "Novi Sad", Country = "Srbija", Income = 200, Year = 2013 };
             Element el3 = new Element() { Id = 3, Age = 24, City = "Novi Sad", Country = "Srbija", Income = 250, Year = 2013 };
             Element el4 = new Element() { Id = 4, Age = 26, City = "Novi Sad", Country = "USA", Income = 300, Year = 2015 };
@@ -18,13 +18,13 @@ namespace Database {
             Element el6 = new Element() { Id = 6, Age = 32, City = "Beograd", Country = "Srbija", Income = 120, Year = 2013 };
             Element el7 = new Element() { Id = 7, Age = 34, City = "Kac", Country = "USA", Income = 500, Year = 2014 };
 
-            baza.AddElement(el);
+            //baza.AddElement(el);
             baza.AddElement(el2);
             baza.AddElement(el3);
             baza.AddElement(el4);
             baza.AddElement(el5);
             baza.AddElement(el6);
-            baza.AddElement(el7);*/
+            baza.AddElement(el7);
 
             Console.WriteLine("All elements");
             foreach (Element e in baza.ElementsToList()) {
@@ -37,6 +37,8 @@ namespace Database {
             Console.WriteLine(baza.MedianIncomeByCountry("Srbija", 2013));
             Console.WriteLine("MaxIncome by country Srbija");
             Console.WriteLine(baza.MaxIncomeByCountry("SrBiJa"));
+
+            //baza.DeleteDB();
         }
     }
 }
