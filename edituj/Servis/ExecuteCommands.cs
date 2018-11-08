@@ -1,8 +1,11 @@
-﻿using Common;
+﻿using Authorizer;
+using Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Servis
@@ -18,6 +21,10 @@ namespace Servis
 
         public bool CreateDB(string name)
         {
+            Thread.CurrentPrincipal = new MyPrincipal((WindowsIdentity)Thread.CurrentPrincipal.Identity);
+            Console.WriteLine(Thread.CurrentPrincipal.IsInRole("unset"));
+            Console.WriteLine(Thread.CurrentPrincipal.IsInRole("createdb"));
+            Console.WriteLine(Thread.CurrentPrincipal.IsInRole("deletedb"));
             bool retVal = true;
             Console.WriteLine("Command: CREATEDB " + name);
             return retVal;

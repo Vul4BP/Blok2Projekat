@@ -53,34 +53,10 @@ namespace Servis
             }
         }
 
-        [PrincipalPermission(SecurityAction.Demand, Role = "Krompir")]
-<<<<<<< HEAD
-        public bool CreateDB(string name) {
-            //Console.WriteLine(Thread.CurrentPrincipal.IsInRole("createdb"));
-            //IPrincipal principal = operationContext.ServiceSecurityContext.AuthorizationContext.Properties["Principal"] as IPrincipal;
-            //Thread.CurrentPrincipal = principal;
-            Thread.CurrentPrincipal = new MyPrincipal((WindowsIdentity)Thread.CurrentPrincipal.Identity);
-            Console.WriteLine(Thread.CurrentPrincipal.IsInRole("unset"));
-            //Thread.CurrentPrincipal = principal;
-            //Console.WriteLine(myP.IsInRole("createdb"));
-            bool retVal = false;
-            try
-            {
-                string text = "Neki text";
-                System.IO.File.WriteAllText(name + ".txt" , text);
-                retVal = true;
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            return retVal;
-=======
         //[CheckPermission(SecurityAction.Demand, requiredPermission = Permissions.CreateDB)]
         public bool CreateDB(string name)
         {
             return EC.CreateDB(name);
->>>>>>> 7875c5beb9d2d3d398fe29d3a405985a12d86b0a
         }
 
         [PrincipalPermission(SecurityAction.Demand, Role = "Krompir")]

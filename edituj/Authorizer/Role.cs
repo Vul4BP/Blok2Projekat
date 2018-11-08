@@ -46,7 +46,7 @@ namespace Authorizer {
             for(int i = 0; i < TextLinesFromFile.Count; i++)
             {
                 //preskace se prazan red
-                if (TextLinesFromFile[i].Trim().Length == 0)
+                if (TextLinesFromFile[i].Trim().Length == 0 || TextLinesFromFile[i].Trim()[0] == '#')
                 {
                     continue;
                 }
