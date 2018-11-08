@@ -62,5 +62,28 @@ namespace Common
 
             throw new Exception("Permission parsing error");
         }
+
+        public static int DisplayDefaultMenu(string title)
+        {
+            int option = -1;
+
+            while (option < 0 || option > 8)
+            {
+                Console.WriteLine("========" + title + "========");
+                Console.WriteLine("1 Napravi bazu");
+                Console.WriteLine("2 Obrisi bazu");
+                Console.WriteLine("3 Upisi u bazu");
+                Console.WriteLine("4 Izmeni bazu");
+                Console.WriteLine("5 Procitaj bazu");
+                Console.WriteLine("6 MedianMonthlyIncomeByCity");
+                Console.WriteLine("7 MedianMonthlyIncome");
+                Console.WriteLine("8 MaxIncomeByCountry");
+                Console.WriteLine("0 Izidji");
+                Console.Write(">");
+                option = int.Parse(Console.ReadLine());
+            }
+
+            return option;
+        }
     }
 }
