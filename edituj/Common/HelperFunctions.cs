@@ -38,6 +38,8 @@ namespace Common
                 return Roles.Reader;
             } else if (tmp == "writer") {
                 return Roles.Writer;
+            } else if (tmp == "unset") {
+                return Roles.Unset;
             }
             throw new Exception("Role parsing error");
         }
@@ -54,7 +56,10 @@ namespace Common
                 return Permissions.WriteDB;
             } else if (tmp == "editdb") {
                 return Permissions.EditDB;
+            } else if (tmp == "unset") {
+                return Permissions.Unset;
             }
+
             throw new Exception("Permission parsing error");
         }
     }

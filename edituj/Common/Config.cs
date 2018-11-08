@@ -28,12 +28,14 @@ namespace Common
     }
 
     public enum Roles {
-        Admin = 1,
+        Unset = 1,
+        Admin,
         Reader,
         Writer
     };
     public enum Permissions {
-        CreateDB = 1,
+        Unset = 1,
+        CreateDB,
         DeleteDB,
         ReadDB,
         WriteDB,

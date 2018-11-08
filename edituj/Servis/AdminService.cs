@@ -10,6 +10,7 @@ using System.Security.Permissions;
 using System.IdentityModel.Policy;
 using System.IO;
 using Authorizer;
+using System.Threading;
 
 namespace Servis
 {
@@ -53,6 +54,13 @@ namespace Servis
 
         [PrincipalPermission(SecurityAction.Demand, Role = "Krompir")]
         public bool CreateDB(string name) {
+            //Console.WriteLine(Thread.CurrentPrincipal.IsInRole("createdb"));
+            //IPrincipal principal = operationContext.ServiceSecurityContext.AuthorizationContext.Properties["Principal"] as IPrincipal;
+            //Thread.CurrentPrincipal = principal;
+            Thread.CurrentPrincipal = new MyPrincipal((WindowsIdentity)Thread.CurrentPrincipal.Identity);
+            Console.WriteLine(Thread.CurrentPrincipal.IsInRole("unset"));
+            //Thread.CurrentPrincipal = principal;
+            //Console.WriteLine(myP.IsInRole("createdb"));
             bool retVal = false;
             try
             {

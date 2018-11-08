@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Principal;
 using System.ServiceModel;
+using System.Threading;
 
 namespace Authorizer {
     public class MyServiceAuthorizationManager : ServiceAuthorizationManager {
@@ -15,11 +16,11 @@ namespace Authorizer {
             bool authorized = false;
 
             IPrincipal principal = operationContext.ServiceSecurityContext.AuthorizationContext.Properties["Principal"] as IPrincipal;
-
+            //Thread.CurrentPrincipal = principal;
             //string group = string.Format("{0}\\Viewer", Environment.MachineName);
             //string group = string.Format("{0}", Environment.MachineName);
 
-            if (principal.IsInRole("Krompir")) {
+            if (principal.IsInRole("readdb")) {
                 authorized = true;
             }
 
