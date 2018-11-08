@@ -24,11 +24,68 @@ namespace Writers
 
             using (WriterProxy proxy = new WriterProxy(tuple.Item1, tuple.Item2))
             {
-                //proxy.AddUser();
-                proxy.WriteDB("aaa", "bbb");
+                int op = -1;
+
+                while (op != 0)
+                {
+                    op = DisplayWriterMenu();
+                    ExecuteCommand(proxy, op);
+                }
             }
 
             Console.ReadLine();
+        }
+
+        static int DisplayWriterMenu()
+        {
+            return HelperFunctions.DisplayDefaultMenu("Writer menu");
+        }
+
+        static void ExecuteCommand(WriterProxy proxy, int op)
+        {
+            string name = "";
+            switch (op)
+            {
+                case 1:
+                    Console.WriteLine("Unesi naziv baze:");
+                    proxy.CreateDB(Console.ReadLine());
+                    break;
+                case 2:
+                    Console.WriteLine("Unesi naziv baze za brisanje:");
+                    proxy.DeleteDB(Console.ReadLine());
+                    break;
+                case 3:
+                    Console.WriteLine("Unesi naziv baze u koju pises:");
+                    name = Console.ReadLine();
+                    Console.WriteLine("Unesi sta hoces da upises u bazu:");
+                    proxy.WriteDB(name, Console.ReadLine());
+                    break;
+                case 4:
+                    Console.WriteLine("Unesi naziv baze koju menjas:");
+                    name = Console.ReadLine();
+                    Console.WriteLine("Unesi sta hoces da upises u bazu:");
+                    proxy.EditDB(name, Console.ReadLine());
+                    break;
+                case 5:
+                    Console.WriteLine("Unesi naziv baze iz koje citas:");
+                    proxy.ReadDB(Console.ReadLine());
+                    break;
+                case 6:
+                    Console.WriteLine("Unesi naziv grada:");
+                    proxy.MedianMonthlyIncomeByCity(Console.ReadLine());
+                    break;
+                case 7:
+                    Console.WriteLine("Unesi bilo sta:");
+                    proxy.MedianMonthlyIncome("", 1);
+                    break;
+                case 8:
+                    Console.WriteLine("Unesi bilo sta:");
+                    proxy.MaxIncomeByCountry();
+                    break;
+                case 0:
+                    Console.WriteLine("Cao poz");
+                    break;
+            }
         }
     }
 }

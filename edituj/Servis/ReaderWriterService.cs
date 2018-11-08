@@ -16,6 +16,7 @@ namespace Servis
     {
         ServiceHost host = null;
         string ServiceName = "ReaderWriterService";
+        ExecuteCommands EC = new ExecuteCommands();
         public void StartService()
         {
             /*
@@ -73,48 +74,52 @@ namespace Servis
         }
 
         //nije potrebno implementirati
-        public bool CreateDB(string name) {
-            return false;
+        public bool CreateDB(string name)
+        {
+            return EC.CreateDB(name);
         }
 
-        public bool DeleteDB(string name) {
-            return false;
+        //[PrincipalPermission(SecurityAction.Demand, Role = "Krompir")]
+        //[CheckPermission(SecurityAction.Demand, requiredPermission = Permissions.DeleteDB)]
+        public bool DeleteDB(string name)
+        {
+            return EC.DeleteDB(name);
         }
 
+        //[CheckPermission(SecurityAction.Demand, Permissions.WriteDB)]
         public bool WriteDB(string name, string txt)
         {
-            Console.WriteLine("Write");
-            return true;
-            //throw new NotImplementedException();
+            return EC.WriteDB(name, txt);
         }
 
+        //[CheckPermission(SecurityAction.Demand, Permissions.EditDB)]
         public bool EditDB(string name, string txt)
         {
-            //throw new NotImplementedException();
-            Console.WriteLine("Edit");
-            return true;
+            return EC.EditDB(name, txt);
         }
 
+        //[CheckPermission(SecurityAction.Demand, Permissions.ReadDB)]
         public bool ReadDB(string name)
         {
-            Console.WriteLine("Read");
-            return true;
-            //throw new NotImplementedException();
+            return EC.ReadDB(name);
         }
 
+        //[CheckPermission(SecurityAction.Demand, Permissions.ReadDB)]
         public bool MedianMonthlyIncomeByCity(string city)
         {
-            throw new NotImplementedException();
+            return EC.MedianMonthlyIncomeByCity(city);
         }
 
+        //[CheckPermission(SecurityAction.Demand, Permissions.ReadDB)]
         public bool MedianMonthlyIncome(string country, int year)
         {
-            throw new NotImplementedException();
+            return EC.MedianMonthlyIncome(country, year);
         }
 
+        //[CheckPermission(SecurityAction.Demand, Permissions.ReadDB)]
         public bool MaxIncomeByCountry()
         {
-            throw new NotImplementedException();
+            return EC.MaxIncomeByCountry();
         }
     }
 }

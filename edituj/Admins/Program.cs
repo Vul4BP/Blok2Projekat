@@ -23,23 +23,16 @@ namespace Admins
             }
         }
 
-        static int DisplayAdminMenu() {
-            int option = -1;
-
-            while (option < 0 || option > 2) {
-                Console.WriteLine("========MENI========");
-                Console.WriteLine("1 Napravi bazu");
-                Console.WriteLine("2 Obrisi bazu");
-                Console.WriteLine("0 Izidji");
-                Console.WriteLine(">");
-                option = int.Parse(Console.ReadLine());
-            }
-
-            return option;
+        static int DisplayAdminMenu()
+        {
+            return HelperFunctions.DisplayDefaultMenu("Admin menu");
         }
 
-        static void ExecuteCommand(AdminProxy proxy, int op) {
-            switch (op) {
+        static void ExecuteCommand(AdminProxy proxy, int op)
+        {
+            string name = "";
+            switch (op)
+            {
                 case 1:
                     Console.WriteLine("Unesi naziv baze:");
                     proxy.CreateDB(Console.ReadLine());
@@ -47,6 +40,34 @@ namespace Admins
                 case 2:
                     Console.WriteLine("Unesi naziv baze za brisanje:");
                     proxy.DeleteDB(Console.ReadLine());
+                    break;
+                case 3:
+                    Console.WriteLine("Unesi naziv baze u koju pises:");
+                    name = Console.ReadLine();
+                    Console.WriteLine("Unesi sta hoces da upises u bazu:");
+                    proxy.WriteDB(name, Console.ReadLine());
+                    break;
+                case 4:
+                    Console.WriteLine("Unesi naziv baze koju menjas:");
+                    name = Console.ReadLine();
+                    Console.WriteLine("Unesi sta hoces da upises u bazu:");
+                    proxy.EditDB(name, Console.ReadLine());
+                    break;
+                case 5:
+                    Console.WriteLine("Unesi naziv baze iz koje citas:");
+                    proxy.ReadDB(Console.ReadLine());
+                    break;
+                case 6:
+                    Console.WriteLine("Unesi naziv grada:");
+                    proxy.MedianMonthlyIncomeByCity(Console.ReadLine());
+                    break;
+                case 7:
+                    Console.WriteLine("Unesi bilo sta:");
+                    proxy.MedianMonthlyIncome("", 1);
+                    break;
+                case 8:
+                    Console.WriteLine("Unesi bilo sta:");
+                    proxy.MaxIncomeByCountry();
                     break;
                 case 0:
                     Console.WriteLine("Cao poz");

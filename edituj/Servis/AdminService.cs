@@ -17,6 +17,7 @@ namespace Servis
     {
         ServiceHost host = null;
         string ServiceName = "AdminService";
+        ExecuteCommands EC = new ExecuteCommands();
 
         public void StartService()
         {
@@ -52,70 +53,53 @@ namespace Servis
         }
 
         [PrincipalPermission(SecurityAction.Demand, Role = "Krompir")]
-        public bool CreateDB(string name) {
-            bool retVal = false;
-            try
-            {
-                string text = "Neki text";
-                System.IO.File.WriteAllText(name + ".txt" , text);
-                retVal = true;
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            return retVal;
+        //[CheckPermission(SecurityAction.Demand, requiredPermission = Permissions.CreateDB)]
+        public bool CreateDB(string name)
+        {
+            return EC.CreateDB(name);
         }
 
         [PrincipalPermission(SecurityAction.Demand, Role = "Krompir")]
-        public bool DeleteDB(string name) {
-            bool retVal = false;
-            try
-            {
-                File.Delete(name + ".txt");
-                retVal = true;
-            }
-            catch(Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            return retVal;          
+        //[CheckPermission(SecurityAction.Demand, requiredPermission = Permissions.DeleteDB)]
+        public bool DeleteDB(string name)
+        {
+            return EC.DeleteDB(name);
         }
 
+        //[CheckPermission(SecurityAction.Demand, Permissions.WriteDB)]
         public bool WriteDB(string name, string txt)
         {
-            Console.WriteLine("Write");
-            return true;
-            //throw new NotImplementedException();
+            return EC.WriteDB(name, txt);
         }
 
+        //[CheckPermission(SecurityAction.Demand, Permissions.EditDB)]
         public bool EditDB(string name, string txt)
         {
-            //throw new NotImplementedException();
-            Console.WriteLine("Edit");
-            return true;
+            return EC.EditDB(name, txt);
         }
 
+        //[CheckPermission(SecurityAction.Demand, Permissions.ReadDB)]
         public bool ReadDB(string name)
         {
-            Console.WriteLine("Read");
-            return true;
-            //throw new NotImplementedException();
+            return EC.ReadDB(name);
         }
 
+        //[CheckPermission(SecurityAction.Demand, Permissions.ReadDB)]
         public bool MedianMonthlyIncomeByCity(string city)
         {
-            throw new NotImplementedException();
+            return EC.MedianMonthlyIncomeByCity(city);
         }
 
+        //[CheckPermission(SecurityAction.Demand, Permissions.ReadDB)]
         public bool MedianMonthlyIncome(string country, int year)
         {
-            throw new NotImplementedException();
+            return EC.MedianMonthlyIncome(country, year);
         }
 
+        //[CheckPermission(SecurityAction.Demand, Permissions.ReadDB)]
         public bool MaxIncomeByCountry()
         {
-            throw new NotImplementedException();
+            return EC.MaxIncomeByCountry();
         }
     }
 }
