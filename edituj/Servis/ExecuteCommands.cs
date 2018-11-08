@@ -13,12 +13,6 @@ namespace Servis
     public class ExecuteCommands : IMainService
     {
 
-        //static Dictionary<string, DBHelper> dictDBs = new Dictionary<string, DBHelper>();  //dict da cuva baze ako ih ima vise a key je ime baze
-        public ExecuteCommands()
-        {
-
-        }
-
         public bool CreateDB(string name)
         {
             Thread.CurrentPrincipal = new MyPrincipal((WindowsIdentity)Thread.CurrentPrincipal.Identity);
