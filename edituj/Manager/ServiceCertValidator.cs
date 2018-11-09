@@ -21,7 +21,7 @@ namespace Manager
         {
             /// This will take service's certificate from storage
             X509Certificate2 srvCert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, Formatter.ParseName(WindowsIdentity.GetCurrent().Name));
-
+            //X509Certificate2 srvCert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, "testservis");
 
             Console.WriteLine(srvCert.Issuer + " " + srvCert.IssuerName);
             Console.WriteLine(certificate.Issuer);

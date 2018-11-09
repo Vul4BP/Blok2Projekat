@@ -31,32 +31,37 @@ namespace Readers
 
         public bool CreateDB(string name)
         {
+            bool retVal = false;
             try
             {
-                return factory.CreateDB(name);
+                factory.CreateDB(name);
+                retVal = true;
             }
             catch (Exception e)
             {
-                Console.WriteLine("Error: {0}", e.Message);
-                return false;
+                Console.WriteLine(e.Message);
             }
+            return retVal;
         }
 
         public bool DeleteDB(string name)
         {
+            bool retVal = false;
             try
             {
-                return factory.DeleteDB(name);
+                factory.DeleteDB(name);
+                retVal = true;
             }
             catch (Exception e)
             {
-                Console.WriteLine("Error: {0}", e.Message);
-                return false;
+                Console.WriteLine(e.Message);
             }
+            return retVal;
         }
 
         public bool EditDB(string name, string txt)
         {
+            //throw new NotImplementedException();
             bool retVal = false;
             try
             {
@@ -72,17 +77,47 @@ namespace Readers
 
         public bool MaxIncomeByCountry()
         {
-            throw new NotImplementedException();
+            bool retVal = false;
+            try
+            {
+                throw new NotImplementedException();    //OVA FALI JOS
+                //retVal = true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return retVal;
         }
 
         public bool MedianMonthlyIncomeByCity(string city)
         {
-            throw new NotImplementedException();
+            bool retVal = false;
+            try
+            {
+                factory.MedianMonthlyIncomeByCity(city);
+                retVal = true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return retVal;
         }
 
         public bool MedianMonthlyIncome(string country, int year)
         {
-            throw new NotImplementedException();
+            bool retVal = false;
+            try
+            {
+                factory.MedianMonthlyIncome(country, year);
+                retVal = true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return retVal;
         }
 
         public bool ReadDB(string name)
@@ -91,7 +126,6 @@ namespace Readers
             try
             {
                 factory.ReadDB(name);
-                Console.WriteLine("Kao nesto sam procitao... :(");
                 retVal = true;
             }
             catch (Exception e)

@@ -22,6 +22,7 @@ namespace Manager
         {
             X509Store store = new X509Store(storeName, storeLocation);
             store.Open(OpenFlags.ReadOnly);
+
             //subjectName = "testServis";
             X509Certificate2Collection certCollection = store.Certificates.Find(X509FindType.FindBySubjectName, subjectName, true);
 

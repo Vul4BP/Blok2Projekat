@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Security.Principal;
 using System.ServiceModel;
 using System.Threading;
+using Common;
 
 namespace Authorizer {
     public class MyServiceAuthorizationManager : ServiceAuthorizationManager {
@@ -19,8 +20,13 @@ namespace Authorizer {
             //Thread.CurrentPrincipal = principal;
             //string group = string.Format("{0}\\Viewer", Environment.MachineName);
             //string group = string.Format("{0}", Environment.MachineName);
+            //principal.Identity.Name
 
-            if (principal.IsInRole("readdb")) {
+            //---------------------------------------------------
+            string calledMethod = OperationContext.Current.IncomingMessageHeaders.Action;
+            string stringPermission = HelperFunctions.StringPermissionFromAction(calledMethod);
+            //---------------------------------------------------
+            if (principal.IsInRole(stringPermission)) {
                 authorized = true;
             }
 

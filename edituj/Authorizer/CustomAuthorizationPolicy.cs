@@ -43,13 +43,22 @@ namespace Authorizer {
         }
 
         protected virtual IPrincipal GetPrincipal(IIdentity identity) {
-            lock (locker) {
+            lock (locker)
+            {
                 IPrincipal principal = null;
                 WindowsIdentity windowsIdentity = identity as WindowsIdentity;
+                IIdentity x059Identity = identity;
+                //X509Identity windowsIdentity = identity as X05Identity;
+                //System.IdentityModel.Claims.
 
-                if (windowsIdentity != null) {
+                if (windowsIdentity != null)
+                {
                     //Audit.AuthenticationSuccess(windowsIdentity.Name);
                     principal = new MyPrincipal(windowsIdentity);
+                }
+                else if (x059Identity != null)
+                {
+                    principal = new MyPrincipal(x059Identity);
                 }
 
                 return principal;

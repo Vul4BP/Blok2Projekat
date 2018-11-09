@@ -9,6 +9,10 @@ using Manager;
 using System.Security.Principal;
 using System.ServiceModel.Security;
 using System.Security.Cryptography.X509Certificates;
+using Authorizer;
+using System.IdentityModel.Policy;
+using System.Threading;
+using System.ServiceModel.Description;
 
 namespace Servis
 {
@@ -16,7 +20,7 @@ namespace Servis
     {
         ServiceHost host = null;
         string ServiceName = "ReaderWriterService";
-        ExecuteCommands EC = new ExecuteCommands();
+        //ExecuteCommands EC;
         public void StartService()
         {
             /*
@@ -25,6 +29,7 @@ namespace Servis
             host = new ServiceHost(typeof(ReaderWriterService));
             host.AddServiceEndpoint(typeof(IMainService), binding, Config.ReaderWriterServiceAddress);
             */
+            //EC = new ExecuteCommands();
 
             string srvCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
             Console.WriteLine(srvCertCN);
@@ -33,6 +38,14 @@ namespace Servis
 
             ServiceHost host = new ServiceHost(typeof(ReaderWriterService));
             host.AddServiceEndpoint(typeof(IMainService), binding, Config.ReaderWriterServiceAddress);
+
+            //--------------------------------------------------------------------------------
+            host.Authorization.ServiceAuthorizationManager = new MyServiceAuthorizationManager();
+
+            List<IAuthorizationPolicy> policies = new List<IAuthorizationPolicy>();
+            policies.Add(new CustomAuthorizationPolicy());
+            host.Authorization.ExternalAuthorizationPolicies = policies.AsReadOnly();
+            //---------------------------------------------------------------------------------
 
             ///PeerTrust - for development purposes only to temporarily disable the mechanism that checks the chain of trust for a certificate. 
             ///To do this, set the CertificateValidationMode property to PeerTrust (PeerOrChainTrust) - specifies that the certificate can be self-issued (peer trust) 
@@ -49,6 +62,24 @@ namespace Servis
             ///Set appropriate service's certificate on the host. Use CertManager class to obtain the certificate based on the "srvCertCN"
             host.Credentials.ServiceCertificate.Certificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, srvCertCN);
             /// host.Credentials.ServiceCertificate.Certificate = CertManager.GetCertificateFromFile("WCFService.pfx");
+
+            //--------------------------------------------------------------------
+            ServiceDebugBehavior debug = host.Description.Behaviors.Find<ServiceDebugBehavior>();
+            // if not found - add behavior with setting turned on 
+            if (debug == null)
+            {
+                host.Description.Behaviors.Add(
+                     new ServiceDebugBehavior() { IncludeExceptionDetailInFaults = true });
+            }
+            else
+            {
+                // make sure setting is turned ON
+                if (!debug.IncludeExceptionDetailInFaults)
+                {
+                    debug.IncludeExceptionDetailInFaults = true;
+                }
+            }
+            //---------------------------------------------------------------------
 
             if (host.Credentials.ServiceCertificate.Certificate == null) {
                 Console.WriteLine("Certificate does not exist: CN=" + srvCertCN);
@@ -73,53 +104,149 @@ namespace Servis
             }
         }
 
-        //nije potrebno implementirati
         public bool CreateDB(string name)
         {
-            return EC.CreateDB(name);
+            //Thread.CurrentPrincipal = new MyPrincipal((WindowsIdentity)Thread.CurrentPrincipal.Identity);
+            //Console.WriteLine(Thread.CurrentPrincipal.IsInRole("unset"));
+            //Console.WriteLine(Thread.CurrentPrincipal.IsInRole("createdb"));
+            //Console.WriteLine(Thread.CurrentPrincipal.IsInRole("deletedb"));
+            bool retVal = true;
+            Console.WriteLine("Command: CREATEDB " + name);
+            return retVal;
+            /*
+            bool retVal = false;
+            try
+            {
+                DBHelper db = new DBHelper();
+                db.CreateDatabase(name);
+                dictDBs.Add(name, db);
+                retVal = true;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return retVal;*/
         }
 
-        //[PrincipalPermission(SecurityAction.Demand, Role = "Krompir")]
-        //[CheckPermission(SecurityAction.Demand, requiredPermission = Permissions.DeleteDB)]
         public bool DeleteDB(string name)
         {
-            return EC.DeleteDB(name);
+            bool retVal = true;
+            Console.WriteLine("Command: DELETE " + name);
+            return retVal;
+            /*
+            bool retVal = false;
+            try
+            {
+                DBHelper db = dictDBs[name];
+                db.DeleteDatabase();
+                dictDBs.Remove(name);
+                retVal = true;
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return retVal;*/
         }
 
-        //[CheckPermission(SecurityAction.Demand, Permissions.WriteDB)]
-        public bool WriteDB(string name, string txt)
-        {
-            return EC.WriteDB(name, txt);
-        }
-
-        //[CheckPermission(SecurityAction.Demand, Permissions.EditDB)]
         public bool EditDB(string name, string txt)
         {
-            return EC.EditDB(name, txt);
+            //Console.WriteLine(Thread.CurrentPrincipal.IsInRole("editdb"));
+            bool retVal = true;
+            Console.WriteLine("Command: EDIT " + name + " text: " + txt);
+            return retVal;
         }
 
-        //[CheckPermission(SecurityAction.Demand, Permissions.ReadDB)]
-        public bool ReadDB(string name)
-        {
-            return EC.ReadDB(name);
-        }
-
-        //[CheckPermission(SecurityAction.Demand, Permissions.ReadDB)]
-        public bool MedianMonthlyIncomeByCity(string city)
-        {
-            return EC.MedianMonthlyIncomeByCity(city);
-        }
-
-        //[CheckPermission(SecurityAction.Demand, Permissions.ReadDB)]
-        public bool MedianMonthlyIncome(string country, int year)
-        {
-            return EC.MedianMonthlyIncome(country, year);
-        }
-
-        //[CheckPermission(SecurityAction.Demand, Permissions.ReadDB)]
         public bool MaxIncomeByCountry()
         {
-            return EC.MaxIncomeByCountry();
+            bool retVal = true;
+            Console.WriteLine("Command: MaxIncomeByCountry");
+            return retVal;
         }
+
+        public bool MedianMonthlyIncome(string country, int year)
+        {
+
+            bool retVal = true;
+            Console.WriteLine("Command: MedianMonthlyIncome " + country + " year: " + year.ToString());
+            return retVal;
+        }
+
+        public bool MedianMonthlyIncomeByCity(string city)
+        {
+
+            bool retVal = true;
+            Console.WriteLine("Command: MedianMonthlyIncome " + city);
+            return retVal;
+        }
+
+        public bool ReadDB(string name)
+        {
+
+            bool retVal = true;
+            Console.WriteLine("Command: ReadDB " + name);
+            return retVal;
+        }
+
+        public bool WriteDB(string name, string txt)
+        {
+
+            bool retVal = true;
+            Console.WriteLine("Command: WriteDB " + name + " txt: " + txt);
+            return retVal;
+        }
+
+        //nije potrebno implementirati
+        //[PrincipalPermission(SecurityAction.Demand, Role = "Krompir")]
+        //[CheckPermission(SecurityAction.Demand, requiredPermission = Permissions.DeleteDB)]
+        //public bool CreateDB(string name)
+        //{
+        //    return EC.CreateDB(name);
+        //}
+
+        ////[PrincipalPermission(SecurityAction.Demand, Role = "Krompir")]
+        ////[CheckPermission(SecurityAction.Demand, requiredPermission = Permissions.DeleteDB)]
+        //public bool DeleteDB(string name)
+        //{
+        //    return EC.DeleteDB(name);
+        //}
+
+        //public bool EditDB(string name, string txt)
+        //{
+        //    return EC.EditDB(name, txt);
+        //}
+
+        ////[CheckPermission(SecurityAction.Demand, Permissions.WriteDB)]
+        //public bool WriteDB(string name, string txt)
+        //{
+        //    return EC.WriteDB(name, txt);
+        //}
+
+        ////[CheckPermission(SecurityAction.Demand, Permissions.ReadDB)]
+        //public bool ReadDB(string name)
+        //{
+        //    return EC.ReadDB(name);
+        //}
+
+        ////[CheckPermission(SecurityAction.Demand, Permissions.ReadDB)]
+        //public bool MedianMonthlyIncomeByCity(string city)
+        //{
+        //    return EC.MedianMonthlyIncomeByCity(city);
+        //}
+
+        ////[CheckPermission(SecurityAction.Demand, Permissions.ReadDB)]
+        //public bool MedianMonthlyIncome(string country, int year)
+        //{
+        //    return EC.MedianMonthlyIncome(country, year);
+        //}
+
+        ////[CheckPermission(SecurityAction.Demand, Permissions.ReadDB)]
+        //public bool MaxIncomeByCountry()
+        //{
+        //    return EC.MaxIncomeByCountry();
+        //}
     }
 }

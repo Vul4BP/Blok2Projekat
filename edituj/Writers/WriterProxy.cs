@@ -18,7 +18,7 @@ namespace Writers
         public WriterProxy(NetTcpBinding binding, EndpointAddress address) : base(binding, address)
         {
             string cltCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
-
+            //string srvCertCN = "testServis";
             this.Credentials.ServiceCertificate.Authentication.CertificateValidationMode = System.ServiceModel.Security.X509CertificateValidationMode.Custom;
             this.Credentials.ServiceCertificate.Authentication.CustomCertificateValidator = new ClientCertValidator();
             this.Credentials.ServiceCertificate.Authentication.RevocationMode = X509RevocationMode.NoCheck;
@@ -29,20 +29,43 @@ namespace Writers
             factory = this.CreateChannel();
         }
 
-        public bool CreateDB(string name) {
-            return false;
-        }
-
-        public bool DeleteDB(string name) {
-            return false;
-        }
-
-        public bool EditDB(string name, string txt)
+        public bool CreateDB(string name)
         {
             bool retVal = false;
             try
             {
-                factory.EditDB(name,txt);
+                factory.CreateDB(name);
+                retVal = true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return retVal;
+        }
+
+        public bool DeleteDB(string name)
+        {
+            bool retVal = false;
+            try
+            {
+                factory.DeleteDB(name);
+                retVal = true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return retVal;
+        }
+
+        public bool EditDB(string name, string txt)
+        {
+            //throw new NotImplementedException();
+            bool retVal = false;
+            try
+            {
+                factory.EditDB(name, txt);
                 retVal = true;
             }
             catch (Exception e)
@@ -54,17 +77,47 @@ namespace Writers
 
         public bool MaxIncomeByCountry()
         {
-            throw new NotImplementedException();
+            bool retVal = false;
+            try
+            {
+                throw new NotImplementedException();    //OVA FALI JOS
+                //retVal = true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return retVal;
         }
 
         public bool MedianMonthlyIncomeByCity(string city)
         {
-            throw new NotImplementedException();
+            bool retVal = false;
+            try
+            {
+                factory.MedianMonthlyIncomeByCity(city);
+                retVal = true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return retVal;
         }
 
         public bool MedianMonthlyIncome(string country, int year)
         {
-            throw new NotImplementedException();
+            bool retVal = false;
+            try
+            {
+                factory.MedianMonthlyIncome(country, year);
+                retVal = true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return retVal;
         }
 
         public bool ReadDB(string name)
@@ -87,8 +140,7 @@ namespace Writers
             bool retVal = false;
             try
             {
-                factory.WriteDB(name,txt);
-                Console.WriteLine("Servis mi je odgovorio jeeej");
+                factory.WriteDB(name, txt);
                 retVal = true;
             }
             catch (Exception e)

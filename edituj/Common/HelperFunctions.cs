@@ -21,12 +21,9 @@ namespace Common
         public static Tuple<NetTcpBinding, EndpointAddress> PrepBindingAndAddressForClient(string ServiceCertCN) {
             NetTcpBinding binding = new NetTcpBinding();
             binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
-
             /// Use CertManager class to obtain the certificate based on the "srvCertCN" representing the expected service identity.
             X509Certificate2 srvCert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, ServiceCertCN);
-
             EndpointAddress address = new EndpointAddress(new Uri(Config.ReaderWriterServiceAddress), new X509CertificateEndpointIdentity(srvCert));
-
             return new Tuple<NetTcpBinding, EndpointAddress>(binding, address);
         }
 
@@ -84,6 +81,32 @@ namespace Common
             }
 
             return option;
+        }
+
+        public static string StringPermissionFromAction(string action)
+        {
+            if (action.Contains("CreateDB"))
+            {
+                return "createdb";
+            }
+            else if (action.Contains("DeleteDB"))
+            {
+                return "deletedb";
+            }
+            else if (action.Contains("EditDB"))
+            {
+                return "editdb";
+            }
+            else if (action.Contains("WriteDB"))
+            {
+                return "writedb";
+            }
+            else if (action.Contains("ReadDB"))
+            {
+                return "readdb";
+            }
+            else
+                throw new Exception("Permission parsing error");
         }
     }
 }

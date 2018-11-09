@@ -39,6 +39,7 @@ namespace Authorizer {
             if (textFromFile.Equals("FILE_ERROR"))
             {
                 Console.WriteLine("Config fajl za permisije nije ucitan. Ne moze da se garantuje rad programa! Ocekivana lokacija configa: " + filePath);
+                throw new Exception("Config fajl za permisije nije ucitan.Ne moze da se garantuje rad programa!Ocekivana lokacija configa: " + filePath);
             }
 
             List<string> TextLinesFromFile = textFromFile.Split('\n').ToList();
