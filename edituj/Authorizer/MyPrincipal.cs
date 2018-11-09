@@ -43,14 +43,17 @@ namespace Authorizer {
         {
             //AKO NIJE WIN IDENTITY ZNACI DA JE SERTIFIKAT TJ IIDENTITY, ULAZI AKO JE READER I WRITER
             Identity = identity;
-            string x059Name = Identity.Name; //VRATICE CN={},OU={}...
-            if (x059Name.Contains("OU=Rider"))
+            if (Identity != null)
             {
-                rola = new Role(Common.Roles.Reader);
-            }
-            else if (x059Name.Contains("OU=Vrajter"))
-            {
-                rola = new Role(Common.Roles.Writer);
+                string x059Name = Identity.Name; //VRATICE CN={},OU={}...
+                if (x059Name.Contains("OU=Rider"))
+                {
+                    rola = new Role(Common.Roles.Reader);
+                }
+                else if (x059Name.Contains("OU=Vrajter"))
+                {
+                    rola = new Role(Common.Roles.Writer);
+                }
             }
         }
 
