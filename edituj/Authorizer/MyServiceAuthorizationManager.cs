@@ -23,7 +23,7 @@ namespace Authorizer {
             //principal.Identity.Name
 
             //---------------------------------------------------
-            string calledMethod = OperationContext.Current.IncomingMessageHeaders.Action;
+            string calledMethod = OperationContext.Current.IncomingMessageHeaders.Action;   //ispisuje koju je metodu pozvao client
             string stringPermission = HelperFunctions.StringPermissionFromAction(calledMethod);
             //---------------------------------------------------
             if (principal.IsInRole(stringPermission)) {

@@ -28,7 +28,7 @@ namespace DatabaseManager
         {
             SaveToDisk();
         }
-
+        //citanje
         public List<Element> ElementsToList()
         {
             return Elements.Values.ToList();
@@ -36,7 +36,13 @@ namespace DatabaseManager
 
         private int getNextId()
         {
-            return Elements.Keys.ToList().Max() + 1;
+            try
+            {
+                return Elements.Keys.ToList().Max() + 1;
+            } catch
+            {
+                return 1;
+            }
         }
 
         public bool AddElement(Element e)
@@ -94,7 +100,7 @@ namespace DatabaseManager
 
             try
             {
-                File.Copy(Config.DBsPath + Name, Config.Archived_DBsPath + Name);
+                File.Copy(Config.DBsPath + Name, Config.Archived_DBsPath + Name, true);
                 return true;
             }
             catch (Exception e)
@@ -150,7 +156,7 @@ namespace DatabaseManager
             return 0;
         }
 
-        public Element MaxIncomeByCountry(string country)
+        public Dictionary<string, Element> MaxIncomeByCountry()
         {
             Dictionary<string, Element> highestIncomeByCountry = new Dictionary<string, Element>();
 
@@ -170,7 +176,7 @@ namespace DatabaseManager
                 }
             }
 
-            return highestIncomeByCountry[country.ToLower()];
+            return highestIncomeByCountry;
         }
 
         private void SaveToDisk()
@@ -208,8 +214,9 @@ namespace DatabaseManager
                     allElements = (List<Element>)deserializer.Deserialize(sr);
                 }
             }
-            catch (Exception e)
+            catch
             {
+                //Console.WriteLine(e.Message);
                 //Console.WriteLine("Database LoadFromDisk: " + e.ToString());
                 return new Dictionary<int, Element>();
             }

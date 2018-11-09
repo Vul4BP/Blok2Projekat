@@ -21,42 +21,43 @@ namespace Admins
             factory = this.CreateChannel();
         }
 
-        public bool CreateDB(string name) {
+        public bool CreateDB(string name)
+        {
             bool retVal = false;
             try
             {
-                factory = this.CreateChannel();
                 factory.CreateDB(name);
                 retVal = true;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
             return retVal;
         }
 
-        public bool DeleteDB(string name) {
+        public bool DeleteDB(string name)
+        {
             bool retVal = false;
             try
             {
                 factory.DeleteDB(name);
                 retVal = true;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
-            return retVal;   
+            return retVal;
         }
 
-        public bool EditDB(string name, string txt)
+        public bool EditDB(string name, Element element)
         {
             //throw new NotImplementedException();
             bool retVal = false;
             try
             {
-                factory.EditDB(name, txt);
+                factory.EditDB(name, element);
                 retVal = true;
             }
             catch (Exception e)
@@ -66,72 +67,76 @@ namespace Admins
             return retVal;
         }
 
-        public bool MaxIncomeByCountry()
+        public Dictionary<string, Element> MaxIncomeByCountry(string name)
         {
-            bool retVal = false;
+            Dictionary<string, Element> maxIncome = new Dictionary<string, Element>();
+            // bool retVal = false;
             try
             {
-                throw new NotImplementedException();    //OVA FALI JOS
+                //throw new NotImplementedException();    //OVA FALI JOS
+                maxIncome = factory.MaxIncomeByCountry(name);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return maxIncome;
+        }
+
+        public float MedianMonthlyIncomeByCity(string name,string city)
+        {
+            float retMedianMonthly = 0;
+            //bool retVal = false;
+            try
+            {
+                retMedianMonthly = factory.MedianMonthlyIncomeByCity(name,city);
                 //retVal = true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
-            return retVal;
+            return retMedianMonthly;
         }
 
-        public bool MedianMonthlyIncomeByCity(string city)
+        public float MedianMonthlyIncome(string name,string country, int year)
         {
-            bool retVal = false;
+            //bool retVal = false;
+            float retMedianMonthly = 0;
             try
             {
-                factory.MedianMonthlyIncomeByCity(city);
-                retVal = true;
+                retMedianMonthly = factory.MedianMonthlyIncome(name,country, year);
+                // retVal = true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
-            return retVal;
+            return retMedianMonthly;
         }
 
-        public bool MedianMonthlyIncome(string country, int year)
+        public List<Element> ReadDB(string name)
         {
-            bool retVal = false;
+            List<Element> elements = new List<Element>();
+            //bool retVal = false;
             try
             {
-                factory.MedianMonthlyIncome(country, year);
-                retVal = true;
+                elements = factory.ReadDB(name);
+                //retVal = true;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
-            return retVal;
+            return elements;
         }
 
-        public bool ReadDB(string name)
+        public bool WriteDB(string name, Element element)
         {
             bool retVal = false;
             try
             {
-                factory.ReadDB(name);
-                retVal = true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            return retVal;
-        }
-
-        public bool WriteDB(string name, string txt)
-        {
-            bool retVal = false;
-            try
-            {
-                factory.WriteDB(name, txt);
+                factory.WriteDB(name, element);
                 retVal = true;
             }
             catch (Exception e)

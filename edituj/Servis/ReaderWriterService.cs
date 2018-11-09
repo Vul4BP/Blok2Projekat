@@ -13,6 +13,7 @@ using Authorizer;
 using System.IdentityModel.Policy;
 using System.Threading;
 using System.ServiceModel.Description;
+using DatabaseManager;
 
 namespace Servis
 {
@@ -98,62 +99,59 @@ namespace Servis
 
         public bool CreateDB(string name)
         {
-            bool retVal = true;
-            Console.WriteLine("Command: CREATEDB " + name);
-            return retVal;
+            Database db = new Database(name);
+            db.ForceSaveToDisk();
+            return true;
+
         }
 
         public bool DeleteDB(string name)
         {
-            bool retVal = true;
-            Console.WriteLine("Command: DELETE " + name);
-            return retVal;
+            Console.WriteLine("Command: DELETEDB " + name);
+            Database db = new Database(name);
+            return db.DeleteDB();
         }
 
-        public bool EditDB(string name, string txt)
+        public bool EditDB(string name, Element element)
         {
-            bool retVal = true;
-            Console.WriteLine("Command: EDIT " + name + " text: " + txt);
-            return retVal;
+            Console.WriteLine("Command: EDIT " + name);
+            Database db = new Database(name);
+            return db.EditElement(element);
         }
 
-        public bool MaxIncomeByCountry()
+        public Dictionary<string, Element> MaxIncomeByCountry(string name)
         {
-            bool retVal = true;
             Console.WriteLine("Command: MaxIncomeByCountry");
-            return retVal;
+            Database db = new Database(name);
+            return db.MaxIncomeByCountry();
         }
 
-        public bool MedianMonthlyIncome(string country, int year)
+        public float MedianMonthlyIncome(string name, string country, int year)
         {
-
-            bool retVal = true;
             Console.WriteLine("Command: MedianMonthlyIncome " + country + " year: " + year.ToString());
-            return retVal;
+            Database db = new Database(name);
+            return db.MedianIncomeByCountry(country, year);
         }
 
-        public bool MedianMonthlyIncomeByCity(string city)
+        public float MedianMonthlyIncomeByCity(string name, string city)
         {
-
-            bool retVal = true;
             Console.WriteLine("Command: MedianMonthlyIncome " + city);
-            return retVal;
+            Database db = new Database(name);
+            return db.MedianIncomeByCity(city);
         }
 
-        public bool ReadDB(string name)
+        public List<Element> ReadDB(string name)
         {
-
-            bool retVal = true;
             Console.WriteLine("Command: ReadDB " + name);
-            return retVal;
+            Database db = new Database(name);
+            return db.ElementsToList();
         }
 
-        public bool WriteDB(string name, string txt)
+        public bool WriteDB(string name, Element e)
         {
-
-            bool retVal = true;
-            Console.WriteLine("Command: WriteDB " + name + " txt: " + txt);
-            return retVal;
+            Console.WriteLine("Command: WriteDB " + name);
+            Database db = new Database(name);
+            return db.AddElement(e);
         }
     }
 }
