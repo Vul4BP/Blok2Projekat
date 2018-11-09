@@ -24,6 +24,11 @@ namespace DatabaseManager
             Elements = LoadFromDisk();
         }
 
+        public void ForceSaveToDisk()
+        {
+            SaveToDisk();
+        }
+
         public List<Element> ElementsToList()
         {
             return Elements.Values.ToList();
@@ -65,7 +70,7 @@ namespace DatabaseManager
             }
             try
             {
-                File.Delete(Name);
+                File.Delete(Config.DBsPath + Name);
                 return true;
             }
             catch (Exception e)
@@ -198,7 +203,7 @@ namespace DatabaseManager
             }
             catch (Exception e)
             {
-                Console.WriteLine("Database LoadFromDisk: " + e.ToString());
+                //Console.WriteLine("Database LoadFromDisk: " + e.ToString());
                 return new Dictionary<int, Element>();
             }
 
