@@ -31,7 +31,7 @@ namespace Authorizer {
                     SecurityIdentifier sid = (SecurityIdentifier)group.Translate(typeof(SecurityIdentifier));
                     var name = sid.Translate(typeof(NTAccount));
 
-                    if (name.ToString().Contains("Krompir"))
+                    if (name.ToString().Contains(Config.AdminGroupName))
                     {
                         rola = new Role(Common.Roles.Admin);
                     }
@@ -46,11 +46,11 @@ namespace Authorizer {
             if (Identity != null)
             {
                 string x059Name = Identity.Name; //VRATICE CN={},OU={}...
-                if (x059Name.Contains("OU=Rider"))
+                if (x059Name.Contains(Config.ReaderGroupName))
                 {
                     rola = new Role(Common.Roles.Reader);
                 }
-                else if (x059Name.Contains("OU=Vrajter"))
+                else if (x059Name.Contains(Config.WriterGroupName))
                 {
                     rola = new Role(Common.Roles.Writer);
                 }
@@ -66,7 +66,7 @@ namespace Authorizer {
                 return true;
             }
             Console.WriteLine("Pozivam is in role FALSE " + role);
-                return false;
+            return false;
         }
     }
 }

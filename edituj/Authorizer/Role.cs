@@ -19,7 +19,13 @@ namespace Authorizer {
 
         public Role(Roles cr) {
             CurrentRole = cr;
-            GrantedPermissions = PermissionsForRoles[CurrentRole];
+            if (PermissionsForRoles.ContainsKey(CurrentRole))
+            {
+                GrantedPermissions = PermissionsForRoles[CurrentRole];
+            } else
+            {
+                GrantedPermissions = new List<Permissions>();
+            }
         }
 
         public Roles CurrentRole { get; set; }
@@ -30,16 +36,15 @@ namespace Authorizer {
             var returnValue = new Dictionary<Roles, List<Permissions>>();
             string textFromFile = "FILE_ERROR";
 
-            using (StreamReader sr = new StreamReader(Config.PermissionsConfigPath))
+            try
             {
-                textFromFile = sr.ReadToEnd();
-            }
-
-            //ako je doslo do greske prilikom citanja fajla onda ce promenljiva textFromFile ostati ista
-            if (textFromFile.Equals("FILE_ERROR"))
+                using (StreamReader sr = new StreamReader(Config.PermissionsConfigPath))
+                {
+                    textFromFile = sr.ReadToEnd();
+                }
+            } catch
             {
-                Console.WriteLine("Config fajl za permisije nije ucitan. Ne moze da se garantuje rad programa! Ocekivana lokacija configa: " + filePath);
-                throw new Exception("Config fajl za permisije nije ucitan.Ne moze da se garantuje rad programa!Ocekivana lokacija configa: " + filePath);
+                throw new Exception("PermissionsConfig file not found on location: " + Config.PermissionsConfigPath);
             }
 
             List<string> TextLinesFromFile = textFromFile.Split('\n').ToList();

@@ -19,11 +19,8 @@ namespace Servis
     {
         ServiceHost host = null;
         string ServiceName = "AdminService";
-        //ExecuteCommands EC;
 
-        public void StartService()
-        {
-            //EC = new ExecuteCommands();
+        public void StartService() { 
 
             NetTcpBinding binding = new NetTcpBinding();
             binding = HelperFunctions.SetBindingSecurity(binding);

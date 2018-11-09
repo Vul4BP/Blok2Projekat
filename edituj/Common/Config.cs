@@ -25,6 +25,10 @@ namespace Common
         public readonly static string ServiceCertificateCN = "testServis";
 
         public readonly static string PermissionsConfigPath = "permissions.cfg";
+
+        public readonly static string AdminGroupName = "Krompir";
+        public readonly static string ReaderGroupName = "OU=Rider";
+        public readonly static string WriterGroupName = "OU=Vrajter";
     }
 
     public enum Roles {

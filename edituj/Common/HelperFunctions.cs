@@ -85,28 +85,23 @@ namespace Common
 
         public static string StringPermissionFromAction(string action)
         {
-            if (action.Contains("CreateDB"))
+            Dictionary<string, string> Permissions = new Dictionary<string, string>
             {
-                return "createdb";
-            }
-            else if (action.Contains("DeleteDB"))
+                {"CreateDB", "createdb" },
+                {"DeleteDB", "deletedb" },
+                {"EditDB", "editdb" },
+                {"MaxIncomeByCountry", "readdb" },
+                {"MedianMonthlyIncome", "readdb" },
+                {"MedianMonthlyIncomeByCity", "readdb" },
+                {"ReadDB", "readdb" },
+                {"WriteDB", "writedb" }
+            };
+
+            if (Permissions.ContainsKey(action))
             {
-                return "deletedb";
+                return Permissions[action];
             }
-            else if (action.Contains("EditDB"))
-            {
-                return "editdb";
-            }
-            else if (action.Contains("WriteDB"))
-            {
-                return "writedb";
-            }
-            else if (action.Contains("ReadDB"))
-            {
-                return "readdb";
-            }
-            else
-                throw new Exception("Permission parsing error");
+            throw new Exception("Action invalid name:" + action);
         }
     }
 }
