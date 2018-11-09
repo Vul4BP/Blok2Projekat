@@ -20,6 +20,7 @@ namespace Servis
     {
         ServiceHost host = null;
         string ServiceName = "AdminService";
+        CommandExecutor Commandos = new CommandExecutor();
 
         public void StartService() { 
 
@@ -69,61 +70,36 @@ namespace Servis
             }
         }
 
-        public bool CreateDB(string name)
-        {
-            Database db = new Database(name);
-            db.ForceSaveToDisk();
-            return true;
-          
+        public bool CreateDB(string name) {
+            return Commandos.CreateDB(name);
         }
 
-        public bool DeleteDB(string name)
-        {
-            Console.WriteLine("Command: DELETEDB " + name);
-            Database db = new Database(name);
-            return db.DeleteDB();
+        public bool DeleteDB(string name) {
+            return Commandos.DeleteDB(name);
         }
 
-        public bool EditDB(string name, Element element)
-        {
-            Console.WriteLine("Command: EDIT " + name);
-            Database db = new Database(name);
-            return db.EditElement(element);
+        public bool EditDB(string name, Element element) {
+            return Commandos.EditDB(name, element);
         }
 
-        public Dictionary<string,Element> MaxIncomeByCountry(string name)
-        {
-            Console.WriteLine("Command: MaxIncomeByCountry");
-            Database db = new Database(name);
-            return db.MaxIncomeByCountry();
+        public Dictionary<string, Element> MaxIncomeByCountry(string name) {
+            return Commandos.MaxIncomeByCountry(name);
         }
 
-        public float MedianMonthlyIncome(string name,string country, int year)
-        {
-            Console.WriteLine("Command: MedianMonthlyIncome " + country + " year: " + year.ToString());
-            Database db = new Database(name);
-            return db.MedianIncomeByCountry(country, year);
+        public float MedianMonthlyIncome(string name, string country, int year) {
+            return Commandos.MedianMonthlyIncome(name, country, year);
         }
 
-        public float MedianMonthlyIncomeByCity(string name,string city)
-        {
-            Console.WriteLine("Command: MedianMonthlyIncome " + city);
-            Database db = new Database(name);
-            return db.MedianIncomeByCity(city);
+        public float MedianMonthlyIncomeByCity(string name, string city) {
+            return Commandos.MedianMonthlyIncomeByCity(name, city);
         }
 
-        public List<Element> ReadDB(string name)
-        {
-            Console.WriteLine("Command: ReadDB " + name);
-            Database db = new Database(name);
-            return db.ElementsToList();
+        public List<Element> ReadDB(string name) {
+            return Commandos.ReadDB(name);
         }
 
-        public bool WriteDB(string name, Element e)
-        {
-            Console.WriteLine("Command: WriteDB " + name);
-            Database db = new Database(name);
-            return db.AddElement(e);
+        public bool WriteDB(string name, Element e) {
+            return Commandos.WriteDB(name, e);
         }
     }
 }
