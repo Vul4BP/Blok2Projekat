@@ -34,14 +34,21 @@ namespace DatabaseManager
             return Elements.Values.ToList();
         }
 
+        private int getNextId()
+        {
+            return Elements.Keys.ToList().Max() + 1;
+        }
+
         public bool AddElement(Element e)
         {
-            if (Elements.ContainsKey(e.Id))
+            int elemId = getNextId();
+            if (Elements.ContainsKey(elemId))
             {
                 return false;
             }
             else
             {
+                e.Id = elemId;
                 Elements.Add(e.Id, e);
                 SaveToDisk();
                 return true;

@@ -25,7 +25,7 @@ namespace Common
 
         public Element()
         {
-
+            
         }
 
         public override string ToString()
@@ -42,8 +42,8 @@ namespace Common
 
         public static Element LoadFromConsole()
         {
-            Console.WriteLine("ID:");
-            int id = int.Parse(Console.ReadLine());
+            //Console.WriteLine("ID:");
+            //int id = int.Parse(Console.ReadLine());
             Console.WriteLine("Country:");
             string country = Console.ReadLine();
             Console.WriteLine("Age:");
@@ -57,7 +57,7 @@ namespace Common
 
             return new Element()
             {
-                Id = id,
+                Id = -1, //id ce biti dodeljen prilikom dodavanja u bazu
                 Country = country,
                 Age = age,
                 City = city,
