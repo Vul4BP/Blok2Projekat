@@ -29,6 +29,11 @@ namespace Common
         public readonly static string AdminGroupName = "Krompir";
         public readonly static string ReaderGroupName = "OU=Rider";
         public readonly static string WriterGroupName = "OU=Vrajter";
+
+        public readonly static string DBsPath = "DBs/";
+        public readonly static string Archived_DBsPath = "ArchivedDBs/";
+
+
     }
 
     public enum Roles {
