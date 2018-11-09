@@ -6,26 +6,27 @@ using System.Threading.Tasks;
 using System.Security.Principal;
 using System.Threading;
 using Common;
+using System.Security.Claims;
 
 namespace Authorizer {
     public class MyPrincipal : IPrincipal
     {
         public IIdentity Identity { get; set; }
-        public WindowsIdentity WinIdentity { get; set; }
+        //public WindowsIdentity WinIdentity { get; set; }
         public Role rola { get; set; }
 
         //public List<String> ListOfGroups { get; set; }
         //public Role rola { get; set; }
 
-        public MyPrincipal(IIdentity identity)
+        public MyPrincipal(WindowsIdentity identity)
         {
-            WinIdentity = identity as WindowsIdentity;
-            if (WinIdentity != null)
+            Identity = identity;
+            if (Identity != null)
             {
                 //ULAZI AKO JE ADMINS, TJ AKO JE WIN IDENTITY
                 List<string> ListOfGroups = new List<String>();
 
-                foreach (IdentityReference group in WinIdentity.Groups)
+                foreach (IdentityReference group in identity.Groups)
                 {
                     SecurityIdentifier sid = (SecurityIdentifier)group.Translate(typeof(SecurityIdentifier));
                     var name = sid.Translate(typeof(NTAccount));
@@ -36,19 +37,20 @@ namespace Authorizer {
                     }
                 }
             }
-            else
+        }
+
+        public MyPrincipal(ClaimsIdentity identity)
+        {
+            //AKO NIJE WIN IDENTITY ZNACI DA JE SERTIFIKAT TJ IIDENTITY, ULAZI AKO JE READER I WRITER
+            Identity = identity;
+            string x059Name = Identity.Name; //VRATICE CN={},OU={}...
+            if (x059Name.Contains("OU=Rider"))
             {
-                //AKO NIJE WIN IDENTITY ZNACI DA JE SERTIFIKAT TJ IIDENTITY, ULAZI AKO JE READER I WRITER
-                Identity = identity;
-                string x059Name = Identity.Name; //VRATICE CN={},OU={}...
-                if (x059Name.Contains("OU=Rider"))
-                {
-                    rola = new Role(Common.Roles.Reader);
-                }
-                else if (x059Name.Contains("OU=Vrajter"))
-                {
-                    rola = new Role(Common.Roles.Writer);
-                }
+                rola = new Role(Common.Roles.Reader);
+            }
+            else if (x059Name.Contains("OU=Vrajter"))
+            {
+                rola = new Role(Common.Roles.Writer);
             }
         }
 

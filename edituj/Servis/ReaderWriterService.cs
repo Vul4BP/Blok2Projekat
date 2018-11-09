@@ -23,14 +23,6 @@ namespace Servis
         //ExecuteCommands EC;
         public void StartService()
         {
-            /*
-            NetTcpBinding binding = new NetTcpBinding();
-
-            host = new ServiceHost(typeof(ReaderWriterService));
-            host.AddServiceEndpoint(typeof(IMainService), binding, Config.ReaderWriterServiceAddress);
-            */
-            //EC = new ExecuteCommands();
-
             string srvCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
             Console.WriteLine(srvCertCN);
             NetTcpBinding binding = new NetTcpBinding();
@@ -106,28 +98,9 @@ namespace Servis
 
         public bool CreateDB(string name)
         {
-            //Thread.CurrentPrincipal = new MyPrincipal((WindowsIdentity)Thread.CurrentPrincipal.Identity);
-            //Console.WriteLine(Thread.CurrentPrincipal.IsInRole("unset"));
-            //Console.WriteLine(Thread.CurrentPrincipal.IsInRole("createdb"));
-            //Console.WriteLine(Thread.CurrentPrincipal.IsInRole("deletedb"));
             bool retVal = true;
             Console.WriteLine("Command: CREATEDB " + name);
             return retVal;
-            /*
-            bool retVal = false;
-            try
-            {
-                DBHelper db = new DBHelper();
-                db.CreateDatabase(name);
-                dictDBs.Add(name, db);
-                retVal = true;
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            return retVal;*/
         }
 
         public bool DeleteDB(string name)
@@ -135,26 +108,10 @@ namespace Servis
             bool retVal = true;
             Console.WriteLine("Command: DELETE " + name);
             return retVal;
-            /*
-            bool retVal = false;
-            try
-            {
-                DBHelper db = dictDBs[name];
-                db.DeleteDatabase();
-                dictDBs.Remove(name);
-                retVal = true;
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            return retVal;*/
         }
 
         public bool EditDB(string name, string txt)
         {
-            //Console.WriteLine(Thread.CurrentPrincipal.IsInRole("editdb"));
             bool retVal = true;
             Console.WriteLine("Command: EDIT " + name + " text: " + txt);
             return retVal;
@@ -198,55 +155,5 @@ namespace Servis
             Console.WriteLine("Command: WriteDB " + name + " txt: " + txt);
             return retVal;
         }
-
-        //nije potrebno implementirati
-        //[PrincipalPermission(SecurityAction.Demand, Role = "Krompir")]
-        //[CheckPermission(SecurityAction.Demand, requiredPermission = Permissions.DeleteDB)]
-        //public bool CreateDB(string name)
-        //{
-        //    return EC.CreateDB(name);
-        //}
-
-        ////[PrincipalPermission(SecurityAction.Demand, Role = "Krompir")]
-        ////[CheckPermission(SecurityAction.Demand, requiredPermission = Permissions.DeleteDB)]
-        //public bool DeleteDB(string name)
-        //{
-        //    return EC.DeleteDB(name);
-        //}
-
-        //public bool EditDB(string name, string txt)
-        //{
-        //    return EC.EditDB(name, txt);
-        //}
-
-        ////[CheckPermission(SecurityAction.Demand, Permissions.WriteDB)]
-        //public bool WriteDB(string name, string txt)
-        //{
-        //    return EC.WriteDB(name, txt);
-        //}
-
-        ////[CheckPermission(SecurityAction.Demand, Permissions.ReadDB)]
-        //public bool ReadDB(string name)
-        //{
-        //    return EC.ReadDB(name);
-        //}
-
-        ////[CheckPermission(SecurityAction.Demand, Permissions.ReadDB)]
-        //public bool MedianMonthlyIncomeByCity(string city)
-        //{
-        //    return EC.MedianMonthlyIncomeByCity(city);
-        //}
-
-        ////[CheckPermission(SecurityAction.Demand, Permissions.ReadDB)]
-        //public bool MedianMonthlyIncome(string country, int year)
-        //{
-        //    return EC.MedianMonthlyIncome(country, year);
-        //}
-
-        ////[CheckPermission(SecurityAction.Demand, Permissions.ReadDB)]
-        //public bool MaxIncomeByCountry()
-        //{
-        //    return EC.MaxIncomeByCountry();
-        //}
     }
 }

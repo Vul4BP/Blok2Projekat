@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IdentityModel.Policy;
 using System.IdentityModel.Claims;
 using System.Security.Principal;
+using System.Security.Claims;
 
 namespace Authorizer {
     public class CustomAuthorizationPolicy : IAuthorizationPolicy {
@@ -47,7 +48,7 @@ namespace Authorizer {
             {
                 IPrincipal principal = null;
                 WindowsIdentity windowsIdentity = identity as WindowsIdentity;
-                IIdentity x059Identity = identity;
+                ClaimsIdentity claimsIdentity = identity as ClaimsIdentity;
                 //X509Identity windowsIdentity = identity as X05Identity;
                 //System.IdentityModel.Claims.
 
@@ -56,9 +57,9 @@ namespace Authorizer {
                     //Audit.AuthenticationSuccess(windowsIdentity.Name);
                     principal = new MyPrincipal(windowsIdentity);
                 }
-                else if (x059Identity != null)
+                else if (claimsIdentity != null)
                 {
-                    principal = new MyPrincipal(x059Identity);
+                    principal = new MyPrincipal(claimsIdentity);
                 }
 
                 return principal;
