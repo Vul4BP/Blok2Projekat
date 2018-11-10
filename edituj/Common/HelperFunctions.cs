@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.ServiceModel;
 using System.Security.Cryptography.X509Certificates;
 using Manager;
+using System.Text.RegularExpressions;
 
 namespace Common
 {
@@ -111,7 +112,7 @@ namespace Common
             Console.WriteLine("Unesi naziv drzave:");
             string name = Console.ReadLine().Trim();
 
-            while (name.Length == 0) {
+            while (name.Length == 0 || !Regex.IsMatch(name, @"^[a-zA-Z]+$")) {
                 Console.WriteLine("Unesi naziv drzave opet:");
                 name = Console.ReadLine().Trim();
             }
@@ -123,16 +124,57 @@ namespace Common
             return name;
         }
 
+        public static int ReadAge()
+        {
+            Console.WriteLine("Unesi godine:");
+            string name = Console.ReadLine().Trim();
+
+            while (name.Length == 0 || !Regex.IsMatch(name, @"^[0-9]+$"))
+            {
+                Console.WriteLine("Unesi godine opet:");
+                name = Console.ReadLine().Trim();
+            }
+            int age = Int32.Parse(name);
+            return age;
+        }
+
+        public static float ReadIncome()
+        {
+            Console.WriteLine("Unesi zaradu:");
+            string name = Console.ReadLine().Trim();
+
+            while (name.Length == 0 || !Regex.IsMatch(name, @"^[0-9]*(?:\.[0-9]*)?$"))
+            {
+                Console.WriteLine("Unesi zaradu opet:");
+                name = Console.ReadLine().Trim();
+            }
+            float income = float.Parse(name);
+            return income;
+        }
+
         public static string ReadCity() {
             Console.WriteLine("Unesi naziv grada:");
             string name = Console.ReadLine().Trim();
 
-            while (name.Length == 0) {
+            while (name.Length == 0 || !Regex.IsMatch(name, @"^[a-zA-Z]+$")) {
                 Console.WriteLine("Unesi naziv grada opet:");
                 name = Console.ReadLine().Trim();
             }
 
             return name;
+        }
+        public static int ReadYear()
+        {
+            Console.WriteLine("Unesi godinu:");
+            string name = Console.ReadLine().Trim();
+
+            while (name.Length == 0 || !Regex.IsMatch(name, @"^[0-9]+$"))
+            {
+                Console.WriteLine("Unesi godinu opet:");
+                name = Console.ReadLine().Trim();
+            }
+            int year = Int32.Parse(name);
+            return year;
         }
 
         public static void ExecuteCommand(IMainService proxy, int op) {

@@ -44,16 +44,19 @@ namespace Common
         {
             //Console.WriteLine("ID:");
             //int id = int.Parse(Console.ReadLine());
-            Console.WriteLine("Country:");
-            string country = Console.ReadLine();
-            Console.WriteLine("Age:");
-            int age = int.Parse(Console.ReadLine());
-            Console.WriteLine("Income:");
-            float income = float.Parse(Console.ReadLine());
-            Console.WriteLine("City:");
-            string city = Console.ReadLine();
-            Console.WriteLine("Year:");
-            int year = int.Parse(Console.ReadLine());
+            //Console.WriteLine("Country:");
+            //string country = Console.ReadLine();
+            string country = HelperFunctions.ReadCountry();
+            //Console.WriteLine("Age:");
+            //int age = int.Parse(Console.ReadLine());
+            int age = HelperFunctions.ReadAge();
+            //Console.WriteLine("Income:");
+            //float income = float.Parse(Console.ReadLine());
+            float income = HelperFunctions.ReadIncome();
+            //Console.WriteLine("City:");
+            string city = HelperFunctions.ReadCity();
+            //Console.WriteLine("Year:");
+            int year = HelperFunctions.ReadYear();
 
             return new Element()
             {
