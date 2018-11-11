@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorizer", "Authorizer\Au
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseManager", "DatabaseManager\DatabaseManager.csproj", "{0090F4B7-EBAD-4D2D-8CA7-5ACD87780323}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Replicator", "Replicator\Replicator.csproj", "{A8DE6DA9-350C-4E53-B900-DF015DF45DD0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{0090F4B7-EBAD-4D2D-8CA7-5ACD87780323}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0090F4B7-EBAD-4D2D-8CA7-5ACD87780323}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0090F4B7-EBAD-4D2D-8CA7-5ACD87780323}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8DE6DA9-350C-4E53-B900-DF015DF45DD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8DE6DA9-350C-4E53-B900-DF015DF45DD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8DE6DA9-350C-4E53-B900-DF015DF45DD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8DE6DA9-350C-4E53-B900-DF015DF45DD0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

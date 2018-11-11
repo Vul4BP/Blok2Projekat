@@ -17,6 +17,8 @@ namespace DatabaseManager
         public Dictionary<int, Element> Elements = null;
 
         //trebace negde if (!Directory.Exists(@"C:\my\dir")) Directory.CreateDirectory(@"C:\my\dir");
+        public Database() { }
+
 
         public Database(string name)
         {

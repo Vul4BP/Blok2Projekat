@@ -16,6 +16,11 @@ namespace Common
         public readonly static string AdminEndpoint = "AdminService";
         public readonly static string AdminServiceAddress = "net.tcp://" + AdminHost + ":" + AdminPort + "/" + AdminEndpoint;
 
+        public readonly static string ReplicatorHost = "localhost";
+        public readonly static string ReplicatorPort = "9997";
+        public readonly static string ReplicatorEndpoint = "ReplicatorService";
+        public readonly static string ReplicatorServiceAddress = "net.tcp://" + ReplicatorHost + ":" + ReplicatorPort + "/" + ReplicatorEndpoint;
+
         //public readonly static string ReaderWriterHost = "10.1.212.165";
         public readonly static string ReaderWriterHost = "localhost";
         public readonly static string ReaderWriterPort = "9998";

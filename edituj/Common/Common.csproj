@@ -49,6 +49,7 @@
     <Compile Include="Element.cs" />
     <Compile Include="HelperFunctions.cs" />
     <Compile Include="IMainService.cs" />
+    <Compile Include="IReplicator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

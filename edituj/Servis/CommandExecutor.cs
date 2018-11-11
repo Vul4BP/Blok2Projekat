@@ -8,6 +8,8 @@ using DatabaseManager;
 
 namespace Servis {
     public class CommandExecutor : IMainService {
+        public static bool WriteOrEditExecuted = false;
+
         public bool CreateDB(string name) {
             Database db = new Database(name);
             db.ForceSaveToDisk();
@@ -24,6 +26,7 @@ namespace Servis {
         public bool EditDB(string name, Element element) {
             Console.WriteLine("Command: EDIT " + name);
             Database db = new Database(name);
+            WriteOrEditExecuted = true;
             return db.EditElement(element);
         }
 
@@ -54,6 +57,7 @@ namespace Servis {
         public bool WriteDB(string name, Element e) {
             Console.WriteLine("Command: WriteDB " + name);
             Database db = new Database(name);
+            WriteOrEditExecuted = true;
             return db.AddElement(e);
         }
     }
