@@ -51,6 +51,7 @@
     <Compile Include="IMainService.cs" />
     <Compile Include="IReaderService.cs" />
     <Compile Include="IWriterService.cs" />
+    <Compile Include="IReplicator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

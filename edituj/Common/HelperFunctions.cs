@@ -122,7 +122,7 @@ namespace Common
             Console.WriteLine("Unesi naziv drzave:");
             string name = Console.ReadLine().Trim();
 
-            while (name.Length == 0 || !Regex.IsMatch(name, @"^[a-zA-Z]+$")) {
+            while (name.Length == 0 || !Regex.IsMatch(name, @"^[a-zA-Z ]+$")) {
                 Console.WriteLine("Unesi naziv drzave opet:");
                 name = Console.ReadLine().Trim();
             }
@@ -166,7 +166,7 @@ namespace Common
             Console.WriteLine("Unesi naziv grada:");
             string name = Console.ReadLine().Trim();
 
-            while (name.Length == 0 || !Regex.IsMatch(name, @"^[a-zA-Z]+$")) {
+            while (name.Length == 0 || !Regex.IsMatch(name, @"^[a-zA-Z ]+$")) {
                 Console.WriteLine("Unesi naziv grada opet:");
                 name = Console.ReadLine().Trim();
             }
@@ -437,8 +437,6 @@ namespace Common
                 {"ReadDB", "readdb" },
                 {"WriteDB", "writedb" }
             };
-
-            action = action.Split('/').Last();
 
             if (Permissions.ContainsKey(action))
             {

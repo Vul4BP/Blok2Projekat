@@ -7,6 +7,7 @@ using System.Security.Principal;
 using System.ServiceModel;
 using System.Threading;
 using Common;
+using Logger;
 
 namespace Authorizer {
     public class MyServiceAuthorizationManager : ServiceAuthorizationManager {
@@ -23,11 +24,16 @@ namespace Authorizer {
             //principal.Identity.Name
 
             //---------------------------------------------------
-            string calledMethod = OperationContext.Current.IncomingMessageHeaders.Action;   //ispisuje koju je metodu pozvao client
+            string calledMethod = OperationContext.Current.IncomingMessageHeaders.Action.Split('/').Last();   //ispisuje koju je metodu pozvao client
             string stringPermission = HelperFunctions.StringPermissionFromAction(calledMethod);
             //---------------------------------------------------
+            string currentUser = ((MyPrincipal)principal).rola.CurrentRole.ToString();
+
             if (principal.IsInRole(stringPermission)) {
                 authorized = true;
+                Audit.LogAuthorizationSuccess(currentUser, calledMethod);
+            } else {
+                Audit.LogAuthorizationFailure(currentUser, calledMethod, "No permission to access");
             }
 
             return authorized;

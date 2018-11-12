@@ -27,6 +27,11 @@ namespace Common
         public readonly static string ReaderEndpoint = "ReaderService";
         public readonly static string ReaderServiceAddress = "net.tcp://" + ReaderHost + ":" + ReaderPort + "/" + ReaderEndpoint;
 
+        public readonly static string ReplicatorHost = "localhost";
+        public readonly static string ReplicatorPort = "21001";
+        public readonly static string ReplicatorEndpoint = "ReplicatorService";
+        public readonly static string ReplicatorServiceAddress = "net.tcp://" + ReplicatorHost + ":" + ReplicatorPort + "/" + ReplicatorEndpoint;
+
 
         public readonly static string ServiceCertificateCN = "testservis";
 
@@ -38,6 +43,10 @@ namespace Common
 
         public readonly static string DBsPath = "DBs/";
         public readonly static string Archived_DBsPath = "ArchivedDBs/";
+        public readonly static string ReplicatorDBsPath = "ReplicatedDBs/";
+
+        public readonly static string LoggerSourceName = "ProjekatAudit";
+        public readonly static string LoggerLogName = "Projekat2Zadatak30";
 
         public readonly static string WriterSign = "testwriter_sign";
         public readonly static string ServisSign = "testservis_sign";
