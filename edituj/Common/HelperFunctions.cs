@@ -237,8 +237,6 @@ namespace Common
                 {"WriteDB", "writedb" }
             };
 
-            action = action.Split('/').Last();
-
             if (Permissions.ContainsKey(action))
             {
                 return Permissions[action];

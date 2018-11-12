@@ -12,7 +12,6 @@ namespace Servis {
             Database db = new Database(name);
             db.ForceSaveToDisk();
             return true;
-
         }
 
         public bool DeleteDB(string name) {
