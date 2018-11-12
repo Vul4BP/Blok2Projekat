@@ -53,14 +53,15 @@ namespace Authorizer {
 
                 if (windowsIdentity != null)
                 {
-                    Audit.LogAuthenticationSuccess(windowsIdentity.Name);
                     principal = new MyPrincipal(windowsIdentity);
+                    Audit.LogAuthenticationSuccess(windowsIdentity.Name);
                 }
                 else if (claimsIdentity != null)
                 {
+                    principal = new MyPrincipal(claimsIdentity);
+
                     //CN=testrider,OU=rider
                     Audit.LogAuthenticationSuccess(claimsIdentity.Name.Split(',')[0].Replace("CN=", ""));
-                    principal = new MyPrincipal(claimsIdentity);
                 } else {
                     Audit.LogAuthenticationFailure(identity.Name);
                 }

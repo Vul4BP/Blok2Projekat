@@ -14,10 +14,14 @@ namespace Logger {
         static EventLog eventLog;
 
         static Audit() {
-            if (!EventLog.SourceExists(SourceName)) {
-                EventLog.CreateEventSource(SourceName, LogName);
+            try {
+                if (!EventLog.SourceExists(SourceName)) {
+                    EventLog.CreateEventSource(SourceName, LogName);
+                }
+                eventLog = new EventLog(LogName, Environment.MachineName, SourceName);
+            } catch (Exception e) {
+                Console.WriteLine("GRESKA AUDIT: " + e.ToString());
             }
-            eventLog = new EventLog(LogName, Environment.MachineName, SourceName);
         }
 
         public static void LogAuthenticationSuccess(string user) {
