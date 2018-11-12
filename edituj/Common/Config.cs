@@ -37,6 +37,7 @@ namespace Common
 
         public readonly static string DBsPath = "DBs/";
         public readonly static string Archived_DBsPath = "ArchivedDBs/";
+        public readonly static string ReplicatorDBsPath = "ReplicatedDBs/";
 
 
     }

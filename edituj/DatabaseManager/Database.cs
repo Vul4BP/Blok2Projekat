@@ -15,14 +15,30 @@ namespace DatabaseManager
 
         public string Name { get; set; }
         public Dictionary<int, Element> Elements = null;
+        private string databaseSavePath = Config.DBsPath;
+        private string databaseArchivePath = Config.Archived_DBsPath;
+        private readonly string DBext = ".xml";
 
+        public string SavePath {
+            get { return databaseSavePath; }
+            set { databaseSavePath = value; }
+        }
+
+        public string ArchivePath {
+            get { return databaseArchivePath; }
+            set { databaseArchivePath = value; }
+        }
         //trebace negde if (!Directory.Exists(@"C:\my\dir")) Directory.CreateDirectory(@"C:\my\dir");
-        public Database() { }
-
 
         public Database(string name)
         {
-            Name = name + ".xml";
+            Name = name + DBext;
+            Elements = LoadFromDisk();
+        }
+
+        public Database(string name, string savePath) {
+            Name = name + DBext;
+            SavePath = savePath;
             Elements = LoadFromDisk();
         }
 
@@ -85,7 +101,7 @@ namespace DatabaseManager
             }
             try
             {
-                File.Delete(Config.DBsPath + Name);
+                File.Delete(databaseSavePath + Name);
                 return true;
             }
             catch (Exception e)
@@ -97,12 +113,12 @@ namespace DatabaseManager
 
         private bool ArchiveDatabase()
         {
-            if (!Directory.Exists(Config.Archived_DBsPath))
-                Directory.CreateDirectory(Config.Archived_DBsPath);
+            if (!Directory.Exists(databaseArchivePath))
+                Directory.CreateDirectory(databaseArchivePath);
 
             try
             {
-                File.Copy(Config.DBsPath + Name, Config.Archived_DBsPath + Name, true);
+                File.Copy(databaseSavePath + Name, databaseArchivePath + Name, true);
                 return true;
             }
             catch (Exception e)
@@ -195,10 +211,10 @@ namespace DatabaseManager
                 }
             }
 
-            if (!Directory.Exists(Config.DBsPath))
-                Directory.CreateDirectory(Config.DBsPath);
+            if (!Directory.Exists(databaseSavePath))
+                Directory.CreateDirectory(databaseSavePath);
       
-            using (StreamWriter sw = new StreamWriter(Config.DBsPath + Name))
+            using (StreamWriter sw = new StreamWriter(databaseSavePath + Name))
             {
                 sw.Write(xml);
             }
@@ -211,7 +227,7 @@ namespace DatabaseManager
 
             try
             {
-                using (StreamReader sr = new StreamReader(Config.DBsPath + Name))
+                using (StreamReader sr = new StreamReader(databaseSavePath + Name))
                 {
                     allElements = (List<Element>)deserializer.Deserialize(sr);
                 }

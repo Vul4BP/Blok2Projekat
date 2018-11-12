@@ -11,6 +11,7 @@ namespace Common
     public interface IReplicator
     {
         [OperationContract]
-        List<Element> ListAllElements(string name);
+        void SendElements(string databaseName, Dictionary<int, Element> allElements);
+        //mozda implementirati da kad se obrise baza da je i replikator obrise?
     }
 }
