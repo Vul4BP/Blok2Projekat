@@ -11,14 +11,15 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace Writers
 {
-    public class WriterProxy : ChannelFactory<IMainService>, IMainService, IDisposable
+    public class WriterProxy : ChannelFactory<IWriterService>, IWriterService, IDisposable
     {
-        IMainService factory;
+        IWriterService factory;
+        //string signCertCN = "";
 
         public WriterProxy(NetTcpBinding binding, EndpointAddress address) : base(binding, address)
         {
             string cltCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
-            //string srvCertCN = "testServis";
+            //string cltCertCN = "testwriter";
             this.Credentials.ServiceCertificate.Authentication.CertificateValidationMode = System.ServiceModel.Security.X509CertificateValidationMode.Custom;
             this.Credentials.ServiceCertificate.Authentication.CustomCertificateValidator = new ClientCertValidator();
             this.Credentials.ServiceCertificate.Authentication.RevocationMode = X509RevocationMode.NoCheck;
@@ -26,15 +27,17 @@ namespace Writers
             /// Set appropriate client's certificate on the channel. Use CertManager class to obtain the certificate based on the "cltCertCN"
             this.Credentials.ClientCertificate.Certificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, cltCertCN);
 
+            //signCertCN = cltCertCN.ToLower() + "_sign"; //kreira sertCN za writera
+
             factory = this.CreateChannel();
         }
 
-        public bool CreateDB(string name)
+        public bool CreateDB(string name, byte[] signature)
         {
             bool retVal = false;
             try
             {
-                factory.CreateDB(name);
+                factory.CreateDB(name, signature);
                 retVal = true;
             }
             catch (Exception e)
@@ -44,12 +47,12 @@ namespace Writers
             return retVal;
         }
 
-        public bool DeleteDB(string name)
+        public bool DeleteDB(string name, byte[] signature)
         {
             bool retVal = false;
             try
             {
-                factory.DeleteDB(name);
+                factory.DeleteDB(name,signature);
                 retVal = true;
             }
             catch (Exception e)
@@ -59,13 +62,13 @@ namespace Writers
             return retVal;
         }
 
-        public bool EditDB(string name, Element element)
+        public bool EditDB(string name, Element element, byte[] signature)
         {
             //throw new NotImplementedException();
             bool retVal = false;
             try
             {
-                factory.EditDB(name, element);
+                factory.EditDB(name, element, signature);
                 retVal = true;
             }
             catch (Exception e)
@@ -75,14 +78,14 @@ namespace Writers
             return retVal;
         }
 
-        public Dictionary<string, Element> MaxIncomeByCountry(string name)
+        public Dictionary<string, Element> MaxIncomeByCountry(string name, byte[] signature)
         {
             Dictionary<string, Element> maxIncome = new Dictionary<string, Element>();
             // bool retVal = false;
             try
             {
-                //throw new NotImplementedException();    //OVA FALI JOS
-                maxIncome = factory.MaxIncomeByCountry(name);
+                //throw new NotImplementedException();   
+                maxIncome = factory.MaxIncomeByCountry(name, signature);
             }
             catch (Exception e)
             {
@@ -91,13 +94,13 @@ namespace Writers
             return maxIncome;
         }
 
-        public float MedianMonthlyIncomeByCity(string name, string city)
+        public float MedianMonthlyIncomeByCity(string name, string city, byte[] signature)
         {
             float retMedianMonthly = 0;
             //bool retVal = false;
             try
             {
-                retMedianMonthly = factory.MedianMonthlyIncomeByCity(name, city);
+                retMedianMonthly = factory.MedianMonthlyIncomeByCity(name, city, signature);
                 //retVal = true;
             }
             catch (Exception e)
@@ -107,13 +110,13 @@ namespace Writers
             return retMedianMonthly;
         }
 
-        public float MedianMonthlyIncome(string name, string country, int year)
+        public float MedianMonthlyIncome(string name, string country, int year, byte[] signature)
         {
             //bool retVal = false;
             float retMedianMonthly = 0;
             try
             {
-                retMedianMonthly = factory.MedianMonthlyIncome(name, country, year);
+                retMedianMonthly = factory.MedianMonthlyIncome(name, country, year, signature);
                 // retVal = true;
             }
             catch (Exception e)
@@ -123,13 +126,13 @@ namespace Writers
             return retMedianMonthly;
         }
 
-        public List<Element> ReadDB(string name)
+        public List<Element> ReadDB(string name, byte[] signature)
         {
             List<Element> elements = new List<Element>();
             //bool retVal = false;
             try
             {
-                elements = factory.ReadDB(name);
+                elements = factory.ReadDB(name, signature);
                 //retVal = true;
             }
             catch (Exception e)
@@ -139,12 +142,12 @@ namespace Writers
             return elements;
         }
 
-        public bool WriteDB(string name, Element element)
+        public bool WriteDB(string name, Element element, byte[] signature)
         {
             bool retVal = false;
             try
             {
-                factory.WriteDB(name, element);
+                factory.WriteDB(name, element,signature);
                 retVal = true;
             }
             catch (Exception e)

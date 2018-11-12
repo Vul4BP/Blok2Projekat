@@ -15,20 +15,20 @@ namespace Common
         [OperationContract]
         bool DeleteDB(string name);
         [OperationContract]
-        bool WriteDB(string name,Element element);
+        bool WriteDB(string name, Element element);
         [OperationContract]
-        bool EditDB(string name,Element element);
+        bool EditDB(string name, Element element);
         //Element
         [OperationContract]
         List<Element> ReadDB(string name);
         //float
         [OperationContract]
-        float MedianMonthlyIncomeByCity(string name,string city);
+        float MedianMonthlyIncomeByCity(string name, string city);
         //float
         [OperationContract]
-        float MedianMonthlyIncome(string name,string country, int year);
+        float MedianMonthlyIncome(string name, string country, int year);
         //list<Element>
         [OperationContract]
-        Dictionary<string,Element> MaxIncomeByCountry(string name);
+        Dictionary<string, Element> MaxIncomeByCountry(string name);
     }
 }

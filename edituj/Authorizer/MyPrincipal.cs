@@ -54,6 +54,10 @@ namespace Authorizer {
                 {
                     rola = new Role(Common.Roles.Writer);
                 }
+                else if(x059Name.Contains("CN=testwriter_sign"))
+                {
+                    rola = new Role(Common.Roles.Writer);
+                }
             }
         }
 

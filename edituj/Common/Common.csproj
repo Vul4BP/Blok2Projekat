@@ -49,6 +49,8 @@
     <Compile Include="Element.cs" />
     <Compile Include="HelperFunctions.cs" />
     <Compile Include="IMainService.cs" />
+    <Compile Include="IReaderService.cs" />
+    <Compile Include="IWriterService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

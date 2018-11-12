@@ -22,7 +22,7 @@ namespace Readers
             //string wrongCertCN = "wrong_sign";
 
             //item1 = NetTcpBinding, item2 = EndpointAddress
-            var tuple = HelperFunctions.PrepBindingAndAddressForClient(Config.ServiceCertificateCN);
+            var tuple = HelperFunctions.PrepBindingAndAddressForReader(Config.ServiceCertificateCN);
 
             using (ReaderProxy proxy = new ReaderProxy(tuple.Item1, tuple.Item2))
             {
@@ -44,7 +44,7 @@ namespace Readers
         }
 
         static void ExecuteCommand(ReaderProxy proxy, int op) {
-            HelperFunctions.ExecuteCommand(proxy, op);
+            HelperFunctions.ExecuteCommandReader(proxy, op);
         }
     }
 }

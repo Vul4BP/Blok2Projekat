@@ -11,13 +11,14 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace Readers
 {
-    class ReaderProxy : ChannelFactory<IMainService>, IMainService, IDisposable
+    class ReaderProxy : ChannelFactory<IReaderService>, IReaderService, IDisposable
     {
-        IMainService factory;
+        IReaderService factory;
 
         public ReaderProxy(NetTcpBinding binding, EndpointAddress address) : base(binding, address)
         {
             string cltCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
+            //cltCertCN = "testreader";
 
             this.Credentials.ServiceCertificate.Authentication.CertificateValidationMode = System.ServiceModel.Security.X509CertificateValidationMode.Custom;
             this.Credentials.ServiceCertificate.Authentication.CustomCertificateValidator = new ClientCertValidator();
@@ -29,129 +30,157 @@ namespace Readers
             factory = this.CreateChannel();
         }
 
-        public bool CreateDB(string name)
-        {
-            bool retVal = false;
-            try
-            {
-                factory.CreateDB(name);
-                retVal = true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            return retVal;
-        }
-
-        public bool DeleteDB(string name)
-        {
-            bool retVal = false;
-            try
-            {
-                factory.DeleteDB(name);
-                retVal = true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            return retVal;
-        }
-
-        public bool EditDB(string name, Element element)
-        {
-            //throw new NotImplementedException();
-            bool retVal = false;
-            try
-            {
-                factory.EditDB(name, element);
-                retVal = true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            return retVal;
-        }
-
-        public Dictionary<string, Element> MaxIncomeByCountry(string name)
-        {
-            Dictionary<string, Element> maxIncome = new Dictionary<string, Element>();
-            // bool retVal = false;
-            try
-            {
-                //throw new NotImplementedException();    //OVA FALI JOS
-                maxIncome = factory.MaxIncomeByCountry(name);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            return maxIncome;
-        }
-
-        public float MedianMonthlyIncomeByCity(string name, string city)
-        {
-            float retMedianMonthly = 0;
-            //bool retVal = false;
-            try
-            {
-                retMedianMonthly = factory.MedianMonthlyIncomeByCity(name, city);
-                //retVal = true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            return retMedianMonthly;
-        }
-
-        public float MedianMonthlyIncome(string name, string country, int year)
+        public Tuple<bool,byte[]> CreateDB(string name)
         {
             //bool retVal = false;
-            float retMedianMonthly = 0;
+            Tuple<bool, byte[]> rVal = new Tuple<bool, byte[]>(false, null);
             try
             {
-                retMedianMonthly = factory.MedianMonthlyIncome(name, country, year);
-                // retVal = true;
+                rVal = factory.CreateDB(name);
+                if (!HelperFunctions.ValidateSignature(name, rVal.Item2, Config.ServisSign))
+                {
+                    //Console.WriteLine("")
+                    //rVal = new Tuple<bool, byte[]>(false, null);
+                }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
-            return retMedianMonthly;
+            return rVal;
         }
 
-        public List<Element> ReadDB(string name)
+        public Tuple<bool, byte[]> DeleteDB(string name)
         {
-            List<Element> elements = new List<Element>();
-            //bool retVal = false;
+            Tuple<bool, byte[]> rVal = new Tuple<bool, byte[]>(false, null);
             try
             {
-                elements = factory.ReadDB(name);
-                //retVal = true;
+                rVal = factory.DeleteDB(name);
+                if (!HelperFunctions.ValidateSignature(name, rVal.Item2, Config.ServisSign))
+                {
+                    //Console.WriteLine("")
+                    //rVal = new Tuple<bool, byte[]>(false, null);
+                }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
-            return elements;
+            return rVal;
         }
 
-        public bool WriteDB(string name, Element element)
+        public Tuple<bool, byte[]> EditDB(string name, Element element)
         {
-            bool retVal = false;
+            Tuple<bool, byte[]> rVal = new Tuple<bool, byte[]>(false, null);
             try
             {
-                factory.WriteDB(name, element);
-                retVal = true;
+                rVal = factory.EditDB(name,element);
+                if (!HelperFunctions.ValidateSignature(name, rVal.Item2, Config.ServisSign))
+                {
+                    //Console.WriteLine("")
+                    //rVal = new Tuple<bool, byte[]>(false,null);
+                }
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
             }
-            return retVal;
+            return rVal;
+        }
+
+        public Tuple<Dictionary<string, Element>,byte[]> MaxIncomeByCountry(string name)
+        {
+            Tuple<Dictionary<string, Element>, byte[]> rVal = new Tuple<Dictionary<string, Element>, byte[]>(new Dictionary<string, Element>(), null);
+            try
+            {
+                rVal = factory.MaxIncomeByCountry(name);
+                if (!HelperFunctions.ValidateSignature(name, rVal.Item2, Config.ServisSign))
+                {
+                    //Console.WriteLine("")
+                    //rVal = new Tuple<Dictionary<string, Element>, byte[]>(new Dictionary<string, Element>(), null);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return rVal;
+        }
+
+        public Tuple<float,byte[]> MedianMonthlyIncomeByCity(string name, string city)
+        {
+            Tuple<float, byte[]> rVal = new Tuple<float, byte[]>(-1, null);
+            try
+            {
+                rVal = factory.MedianMonthlyIncomeByCity(name, city);
+                if (!HelperFunctions.ValidateSignature(name, rVal.Item2, Config.ServisSign))
+                {
+                    //Console.WriteLine("")
+                    //rVal = new Tuple<float, byte[]>(-1, null);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return rVal;
+        }
+
+        public Tuple<float,byte[]> MedianMonthlyIncome(string name, string country, int year)
+        {
+            Tuple<float, byte[]> rVal = new Tuple<float, byte[]>(-1, null);
+            try
+            {
+                rVal = factory.MedianMonthlyIncome(name, country, year);
+                if (!HelperFunctions.ValidateSignature(name, rVal.Item2, Config.ServisSign))
+                {
+                    //Console.WriteLine("")
+                    //rVal = new Tuple<float, byte[]>(-1, null);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return rVal;
+        }
+
+        public Tuple<List<Element>,byte[]> ReadDB(string name)
+        {
+            Tuple<List<Element>, byte[]> rVal = new Tuple<List<Element>, byte[]>(new List<Element>(), null);
+            try
+            {
+                rVal = factory.ReadDB(name);
+                if (!HelperFunctions.ValidateSignature(name, rVal.Item2, Config.ServisSign))
+                {
+                    //Console.WriteLine("")
+                    //rVal = new Tuple<List<Element>, byte[]>(new List<Element>(), null);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return rVal;
+        }
+
+        public Tuple<bool, byte[]> WriteDB(string name, Element element)
+        {
+            Tuple<bool, byte[]> rVal = new Tuple<bool, byte[]>(false, null);
+            try
+            {
+                rVal = factory.WriteDB(name,element);
+                if (!HelperFunctions.ValidateSignature(name, rVal.Item2, Config.ServisSign))
+                {
+                    //Console.WriteLine("")
+                    //rVal = new Tuple<bool, byte[]>(false, null);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return rVal;
         }
     }
 }

@@ -17,21 +17,26 @@ using DatabaseManager;
 
 namespace Servis
 {
-    class ReaderWriterService : IMainService
+    class ReaderService : IReaderService
     {
         ServiceHost host = null;
-        string ServiceName = "ReaderWriterService";
+        string ServiceName = "ReaderService";
         CommandExecutor Commandos = new CommandExecutor();
+        X509Certificate2 signCert;
 
         public void StartService()
         {
+            //string signCertCN = "testservis_sign";
+            //signCert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, signCertCN);
+
             string srvCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
-            Console.WriteLine(srvCertCN);
+            //Console.WriteLine(srvCertCN);
+            //srvCertCN = "testservis";
             NetTcpBinding binding = new NetTcpBinding();
             binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
 
-            ServiceHost host = new ServiceHost(typeof(ReaderWriterService));
-            host.AddServiceEndpoint(typeof(IMainService), binding, Config.ReaderWriterServiceAddress);
+            ServiceHost host = new ServiceHost(typeof(ReaderService));
+            host.AddServiceEndpoint(typeof(IReaderService), binding, Config.ReaderServiceAddress);
 
             //--------------------------------------------------------------------------------
             host.Authorization.ServiceAuthorizationManager = new MyServiceAuthorizationManager();
@@ -75,11 +80,14 @@ namespace Servis
             }
             //---------------------------------------------------------------------
 
-            if (host.Credentials.ServiceCertificate.Certificate == null) {
+            if (host.Credentials.ServiceCertificate.Certificate == null)
+            {
                 Console.WriteLine("Certificate does not exist: CN=" + srvCertCN);
                 Console.WriteLine(ServiceName + " stopped");
                 host = null;
-            } else {
+            }
+            else
+            {
                 host.Open();
                 Console.WriteLine(ServiceName + " service started.");
             }
@@ -98,44 +106,60 @@ namespace Servis
             }
         }
 
-        public bool CreateDB(string name)
+        public Tuple<bool,byte[]> CreateDB(string name)
         {
-            return Commandos.CreateDB(name);
+            signCert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, Config.ServisSign);
+            Tuple<bool, byte[]> rVal = new Tuple<bool, byte[]>(Commandos.CreateDB(name), DigitalSignature.Create(name, "SHA1", signCert));
+            return rVal;
         }
 
-        public bool DeleteDB(string name)
+        public Tuple<bool, byte[]> DeleteDB(string name)
         {
-            return Commandos.DeleteDB(name);
+            signCert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, Config.ServisSign);
+            Tuple<bool, byte[]> rVal = new Tuple<bool, byte[]>(Commandos.DeleteDB(name), DigitalSignature.Create(name, "SHA1", signCert));
+            return rVal;
         }
 
-        public bool EditDB(string name, Element element)
+        public Tuple<bool, byte[]> EditDB(string name, Element element)
         {
-            return Commandos.EditDB(name, element);
+            signCert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, Config.ServisSign);
+            Tuple<bool, byte[]> rVal = new Tuple<bool, byte[]>(Commandos.EditDB(name,element), DigitalSignature.Create(name, "SHA1", signCert));
+            return rVal;
         }
 
-        public Dictionary<string, Element> MaxIncomeByCountry(string name)
+        public Tuple<Dictionary<string, Element>,byte[]> MaxIncomeByCountry(string name)
         {
-            return Commandos.MaxIncomeByCountry(name);
+            signCert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, Config.ServisSign);
+            Tuple<Dictionary<string,Element>, byte[]> rVal = new Tuple<Dictionary<string, Element>, byte[]>(Commandos.MaxIncomeByCountry(name), DigitalSignature.Create(name, "SHA1", signCert));
+            return rVal;
         }
 
-        public float MedianMonthlyIncome(string name, string country, int year)
+        public Tuple<float, byte[]> MedianMonthlyIncome(string name, string country, int year)
         {
-            return Commandos.MedianMonthlyIncome(name, country, year);
+            signCert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, Config.ServisSign);
+            Tuple<float, byte[]> rVal = new Tuple<float, byte[]>(Commandos.MedianMonthlyIncome(name,country,year), DigitalSignature.Create(name, "SHA1", signCert));
+            return rVal;
         }
 
-        public float MedianMonthlyIncomeByCity(string name, string city)
+        public Tuple<float, byte[]> MedianMonthlyIncomeByCity(string name, string city)
         {
-            return Commandos.MedianMonthlyIncomeByCity(name, city);
+            signCert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, Config.ServisSign);
+            Tuple<float, byte[]> rVal = new Tuple<float, byte[]>(Commandos.MedianMonthlyIncomeByCity(name, city), DigitalSignature.Create(name, "SHA1", signCert));
+            return rVal;
         }
 
-        public List<Element> ReadDB(string name)
+        public Tuple<List<Element>,byte[]> ReadDB(string name)
         {
-            return Commandos.ReadDB(name);
+            signCert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, Config.ServisSign);
+            Tuple<List<Element>,byte[]> rVal = new Tuple<List<Element>, byte[]>(Commandos.ReadDB(name), DigitalSignature.Create(name, "SHA1", signCert));
+            return rVal;
         }
 
-        public bool WriteDB(string name, Element e)
+        public Tuple<bool, byte[]> WriteDB(string name, Element e)
         {
-            return Commandos.WriteDB(name, e);
+            signCert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, Config.ServisSign);
+            Tuple<bool, byte[]> rVal = new Tuple<bool, byte[]>(Commandos.WriteDB(name,e), DigitalSignature.Create(name, "SHA1", signCert));
+            return rVal;
         }
     }
 }

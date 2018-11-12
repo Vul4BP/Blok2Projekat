@@ -65,7 +65,8 @@
     <Compile Include="CommandExecutor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReaderWriterService.cs" />
+    <Compile Include="ReaderService.cs" />
+    <Compile Include="WriterService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -9,6 +9,7 @@ using DatabaseManager;
 namespace Servis {
     public class CommandExecutor : IMainService {
         public bool CreateDB(string name) {
+            Console.WriteLine("Command: CREATEDB " + name);
             Database db = new Database(name);
             db.ForceSaveToDisk();
             return true;

@@ -17,12 +17,18 @@ namespace Common
         public readonly static string AdminServiceAddress = "net.tcp://" + AdminHost + ":" + AdminPort + "/" + AdminEndpoint;
 
         //public readonly static string ReaderWriterHost = "10.1.212.165";
-        public readonly static string ReaderWriterHost = "localhost";
-        public readonly static string ReaderWriterPort = "9998";
-        public readonly static string ReaderWriterEndpoint = "ReaderWriterService";
-        public readonly static string ReaderWriterServiceAddress = "net.tcp://" + ReaderWriterHost + ":" + ReaderWriterPort + "/" + ReaderWriterEndpoint;
+        public readonly static string WriterHost = "localhost";
+        public readonly static string WriterPort = "9998";
+        public readonly static string WriterEndpoint = "WriterService";
+        public readonly static string WriterServiceAddress = "net.tcp://" + WriterHost + ":" + WriterPort + "/" + WriterEndpoint;
 
-        public readonly static string ServiceCertificateCN = "testServis";
+        public readonly static string ReaderHost = "localhost";
+        public readonly static string ReaderPort = "9997";
+        public readonly static string ReaderEndpoint = "ReaderService";
+        public readonly static string ReaderServiceAddress = "net.tcp://" + ReaderHost + ":" + ReaderPort + "/" + ReaderEndpoint;
+
+
+        public readonly static string ServiceCertificateCN = "testservis";
 
         public readonly static string PermissionsConfigPath = "permissions.cfg";
 
@@ -32,6 +38,9 @@ namespace Common
 
         public readonly static string DBsPath = "DBs/";
         public readonly static string Archived_DBsPath = "ArchivedDBs/";
+
+        public readonly static string WriterSign = "testwriter_sign";
+        public readonly static string ServisSign = "testservis_sign";
 
 
     }

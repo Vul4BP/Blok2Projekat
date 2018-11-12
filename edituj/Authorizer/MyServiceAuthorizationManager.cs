@@ -30,7 +30,6 @@ namespace Authorizer {
                 authorized = true;
             }
 
-
             return authorized;
         }
     }

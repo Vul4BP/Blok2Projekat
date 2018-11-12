@@ -2,14 +2,14 @@
 
 net localgroup "Krompir" /add
 
-net user "testReader" "12345" /add
-net user "testWriter" "12345" /add
-net user "testServis" "12345" /add
+net user "testreader" "12345" /add
+net user "testwriter" "12345" /add
+net user "testservis" "12345" /add
 
-net user "ClientUser" "12345" /add
+net user "clientuser" "12345" /add
 
-net localgroup "Krompir" "ClientUser" /add
+net localgroup "Krompir" "clientuser" /add
 
-WMIC USERACCOUNT WHERE "Name='ClientUser'" SET PasswordExpires=FALSE
+WMIC USERACCOUNT WHERE "Name='clientuser'" SET PasswordExpires=FALSE
 
-WMIC USERACCOUNT WHERE "Name='ClientUser'" SET Passwordchangeable=FALSE
+WMIC USERACCOUNT WHERE "Name='clientuser'" SET Passwordchangeable=FALSE

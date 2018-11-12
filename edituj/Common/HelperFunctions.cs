@@ -19,12 +19,22 @@ namespace Common
             return binding; 
         }
 
-        public static Tuple<NetTcpBinding, EndpointAddress> PrepBindingAndAddressForClient(string ServiceCertCN) {
+        public static Tuple<NetTcpBinding, EndpointAddress> PrepBindingAndAddressForWriter(string ServiceCertCN) {
             NetTcpBinding binding = new NetTcpBinding();
             binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
             /// Use CertManager class to obtain the certificate based on the "srvCertCN" representing the expected service identity.
             X509Certificate2 srvCert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, ServiceCertCN);
-            EndpointAddress address = new EndpointAddress(new Uri(Config.ReaderWriterServiceAddress), new X509CertificateEndpointIdentity(srvCert));
+            EndpointAddress address = new EndpointAddress(new Uri(Config.WriterServiceAddress), new X509CertificateEndpointIdentity(srvCert));
+            return new Tuple<NetTcpBinding, EndpointAddress>(binding, address);
+        }
+
+        public static Tuple<NetTcpBinding, EndpointAddress> PrepBindingAndAddressForReader(string ServiceCertCN)
+        {
+            NetTcpBinding binding = new NetTcpBinding();
+            binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
+            /// Use CertManager class to obtain the certificate based on the "srvCertCN" representing the expected service identity.
+            X509Certificate2 srvCert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, ServiceCertCN);
+            EndpointAddress address = new EndpointAddress(new Uri(Config.ReaderServiceAddress), new X509CertificateEndpointIdentity(srvCert));
             return new Tuple<NetTcpBinding, EndpointAddress>(binding, address);
         }
 
@@ -177,7 +187,7 @@ namespace Common
             return year;
         }
 
-        public static void ExecuteCommand(IMainService proxy, int op) {
+        public static void ExecuteCommandAdmin(IMainService proxy, int op ) {
             string name = "";
             if (op != 0) {
                 name = HelperFunctions.ReadDatabaseName();
@@ -229,6 +239,155 @@ namespace Common
                 case 0:
                     Console.WriteLine("Cao poz");
                     break;
+            }
+        }
+
+        public static void ExecuteCommandWriter(IWriterService proxy, int op, X509Certificate2 signCert)
+        {
+            string name = "";
+            if (op != 0)
+            {
+                name = HelperFunctions.ReadDatabaseName();
+            }
+            switch (op)
+            {
+                case 1:
+                    CheckIfExecuted(proxy.CreateDB(name,DigitalSignature.Create(name,"SHA1",signCert)));
+                    break;
+                case 2:
+                    CheckIfExecuted(proxy.DeleteDB(name,DigitalSignature.Create(name, "SHA1", signCert)));
+                    break;
+                case 3:
+                    Element tmpElem = Element.LoadFromConsole();
+                    CheckIfExecuted(proxy.WriteDB(name, tmpElem, DigitalSignature.Create(name, "SHA1", signCert)));
+                    break;
+                case 4:
+                    List<Element> elems = proxy.ReadDB(name, DigitalSignature.Create(name, "SHA1", signCert));
+                    Console.WriteLine("Ids of all elements:");
+                    DisplayAllElements(elems, true);
+
+                    Element toEdit = GetElementToEdit(elems);
+
+                    Element newElem = Element.LoadFromConsole();
+                    newElem.Id = toEdit.Id;
+                    CheckIfExecuted(proxy.EditDB(name, newElem, DigitalSignature.Create(name, "SHA1", signCert)));
+                    break;
+                case 5:
+                    DisplayAllElements(proxy.ReadDB(name, DigitalSignature.Create(name, "SHA1", signCert)));
+                    break;
+                case 6:
+                    string city = HelperFunctions.ReadCity();
+                    Console.Write("Prosecna plata za grad " + city + ": ");
+                    Console.WriteLine(proxy.MedianMonthlyIncomeByCity(name, city, DigitalSignature.Create(name, "SHA1", signCert)));
+                    break;
+                case 7:
+                    string country = HelperFunctions.ReadCountry();
+                    Console.WriteLine("Unesi godinu:");
+                    int year = int.Parse(Console.ReadLine());
+                    float medianMonthlyIncome = proxy.MedianMonthlyIncome(name, country, year, DigitalSignature.Create(name, "SHA1", signCert));
+                    Console.WriteLine("Prosecna plata za " + country + " u " + year + " god.:" + medianMonthlyIncome);
+                    break;
+                case 8:
+                    var tmpDict = proxy.MaxIncomeByCountry(name, DigitalSignature.Create(name, "SHA1", signCert));
+                    Console.WriteLine("Najveca plata za svaku drzavu:");
+                    foreach (KeyValuePair<string, Element> kvp in tmpDict)
+                    {
+                        Console.WriteLine(kvp.Key + " : id:" + kvp.Value.Id + " plata:" + kvp.Value.Income);
+                    }
+                    break;
+                case 0:
+                    Console.WriteLine("Cao poz");
+                    break;
+            }
+        }
+
+        public static void ExecuteCommandReader(IReaderService proxy, int op)
+        {
+            string name = "";
+            if (op != 0)
+            {
+                name = HelperFunctions.ReadDatabaseName();
+            }
+            try
+            {
+                switch (op)
+                {
+                    case 1:
+                        CheckIfExecuted(proxy.CreateDB(name).Item1);
+                        break;
+                    case 2:
+                        CheckIfExecuted(proxy.DeleteDB(name).Item1);
+                        break;
+                    case 3:
+                        Element tmpElem = Element.LoadFromConsole();
+                        CheckIfExecuted(proxy.WriteDB(name, tmpElem).Item1);
+                        break;
+                    case 4:
+                        List<Element> elems = proxy.ReadDB(name).Item1;
+                        Console.WriteLine("Ids of all elements:");
+                        DisplayAllElements(elems, true);
+
+                        Element toEdit = GetElementToEdit(elems);
+
+                        Element newElem = Element.LoadFromConsole();
+                        newElem.Id = toEdit.Id;
+                        CheckIfExecuted(proxy.EditDB(name, newElem).Item1);
+                        break;
+                    case 5:
+                        DisplayAllElements(proxy.ReadDB(name).Item1);
+                        break;
+                    case 6:
+                        string city = HelperFunctions.ReadCity();
+                        float medianMonthlyIncomeByCity = proxy.MedianMonthlyIncomeByCity(name, city).Item1;
+                        if(medianMonthlyIncomeByCity>=0)
+                            Console.WriteLine("Prosecna plata za grad " + city + ": " + medianMonthlyIncomeByCity);
+                        break;
+                    case 7:
+                        string country = HelperFunctions.ReadCountry();
+                        Console.WriteLine("Unesi godinu:");
+                        int year = int.Parse(Console.ReadLine());
+                        float medianMonthlyIncome = proxy.MedianMonthlyIncome(name, country, year).Item1;
+                        if(medianMonthlyIncome >= 0)
+                            Console.WriteLine("Prosecna plata za " + country + " u " + year + " god.:" + medianMonthlyIncome);
+                        break;
+                    case 8:
+                        var tmpDict = proxy.MaxIncomeByCountry(name).Item1;
+                        Console.WriteLine("Najveca plata za svaku drzavu:");
+                        foreach (KeyValuePair<string, Element> kvp in tmpDict)
+                        {
+                            Console.WriteLine(kvp.Key + " : id:" + kvp.Value.Id + " plata:" + kvp.Value.Income);
+                        }
+                        break;
+                    case 0:
+                        Console.WriteLine("Cao poz");
+                        break;
+                }
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        public static bool ValidateSignature(string s, byte[] signature,string signCert)
+        {
+            if(signature==null)
+            {
+                return false;
+            }
+            X509Certificate2 clientCertificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, signCert);
+
+            /// Verify signature using SHA1 hash algorithm
+            if (DigitalSignature.Verify(s, "SHA1", signature, clientCertificate))
+            {
+                Console.WriteLine("Digital Signature is valid.");
+                //Console.WriteLine(message);
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("Digital Signature is invalid.");
+                return false;
             }
         }
 

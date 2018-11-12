@@ -10,6 +10,7 @@ set username2L=testwriter
 set username3=testServis
 set username3L=testservis
 
+
 makecert -n "CN=%CertFajlIme%" -r -sv %CertFajlIme%.pvk %CertFajlIme%.cer
 
 makecert -sv %username1%.pvk -iv %CertFajlIme%.pvk -n "CN=%username1L%,OU=Rider" -pe -ic %CertFajlIme%.cer %username1%.cer -sr localmachine -ss My -sky exchange

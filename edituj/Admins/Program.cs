@@ -30,7 +30,7 @@ namespace Admins
 
         static void ExecuteCommand(AdminProxy proxy, int op)
         {
-            HelperFunctions.ExecuteCommand(proxy, op);
+            HelperFunctions.ExecuteCommandAdmin(proxy, op);
         }
     }
 }
