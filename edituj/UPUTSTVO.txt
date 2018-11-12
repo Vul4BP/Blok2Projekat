@@ -8,6 +8,6 @@
 6. startuj servis
 7. napraviSertifikatZaDigPotpis.bat
 8. instalirati sertifikate
-	Sign1 i Sign2 -> TrustedPeople
+	Sign1 i Sign2 -> Personal
 9.posleInstalacijeZaDigPotpis.bat
 10.startuj servis
