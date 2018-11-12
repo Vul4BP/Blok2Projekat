@@ -7,6 +7,7 @@ using System.IdentityModel.Policy;
 using System.IdentityModel.Claims;
 using System.Security.Principal;
 using System.Security.Claims;
+using Logger;
 
 namespace Authorizer {
     public class CustomAuthorizationPolicy : IAuthorizationPolicy {
@@ -49,17 +50,19 @@ namespace Authorizer {
                 IPrincipal principal = null;
                 WindowsIdentity windowsIdentity = identity as WindowsIdentity;
                 ClaimsIdentity claimsIdentity = identity as ClaimsIdentity;
-                //X509Identity windowsIdentity = identity as X05Identity;
-                //System.IdentityModel.Claims.
 
                 if (windowsIdentity != null)
                 {
-                    //Audit.AuthenticationSuccess(windowsIdentity.Name);
+                    Audit.LogAuthenticationSuccess(windowsIdentity.Name);
                     principal = new MyPrincipal(windowsIdentity);
                 }
                 else if (claimsIdentity != null)
                 {
+                    //CN=testrider,OU=rider
+                    Audit.LogAuthenticationSuccess(claimsIdentity.Name.Split(',')[0].Replace("CN=", ""));
                     principal = new MyPrincipal(claimsIdentity);
+                } else {
+                    Audit.LogAuthenticationFailure(identity.Name);
                 }
 
                 return principal;
