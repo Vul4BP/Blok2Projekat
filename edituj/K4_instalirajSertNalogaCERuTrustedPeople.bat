@@ -8,6 +8,6 @@ set username2=testWriter
 
 set username3=testServis
 
-certutil -addstore -f -enterprise -user "TrustedPeople" "%putanjaSertifikata%%username1%.cer"
-certutil -addstore -f -enterprise -user "TrustedPeople" "%putanjaSertifikata%%username2%.cer"
-certutil -addstore -f -enterprise -user "TrustedPeople" "%putanjaSertifikata%%username3%.cer"
+certutil -addstore -f -user "TrustedPeople" "%putanjaSertifikata%%username1%.cer"
+certutil -addstore -f -user "TrustedPeople" "%putanjaSertifikata%%username2%.cer"
+certutil -addstore -f -user "TrustedPeople" "%putanjaSertifikata%%username3%.cer"
