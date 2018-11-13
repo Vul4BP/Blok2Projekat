@@ -14,12 +14,13 @@ namespace Authorizer {
         public IIdentity Identity { get; set; }
         //public WindowsIdentity WinIdentity { get; set; }
         public Role rola { get; set; }
-
+        
         //public List<String> ListOfGroups { get; set; }
         //public Role rola { get; set; }
 
         public MyPrincipal(WindowsIdentity identity)
         {
+            rola = new Role(Common.Roles.Unset);
             Identity = identity;
             if (Identity != null)
             {
@@ -41,6 +42,7 @@ namespace Authorizer {
 
         public MyPrincipal(ClaimsIdentity identity)
         {
+            rola = new Role(Common.Roles.Unset);
             //AKO NIJE WIN IDENTITY ZNACI DA JE SERTIFIKAT TJ IIDENTITY, ULAZI AKO JE READER I WRITER
             Identity = identity;
             if (Identity != null)

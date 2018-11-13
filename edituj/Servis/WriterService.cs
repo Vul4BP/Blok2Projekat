@@ -26,7 +26,6 @@ namespace Servis
         public void StartService()
         {
             string srvCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
-
             if (srvCertCN.ToLower() != "testservis")
             {
                 throw new Exception("Nisi admir");

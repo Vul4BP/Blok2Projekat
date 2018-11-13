@@ -19,6 +19,7 @@ namespace Admins
             binding = HelperFunctions.SetBindingSecurity(binding);
             this.Credentials.Windows.AllowedImpersonationLevel = System.Security.Principal.TokenImpersonationLevel.Impersonation;
             factory = this.CreateChannel();
+
         }
 
         public bool CreateDB(string name)
