@@ -29,5 +29,26 @@ namespace Servis {
                 Console.WriteLine("Error while connecting to DBReplicator service. Database is not replicated");
             }
         }
+
+        public static void DeleteDataBaseReplicator(string databaseName)
+        {
+            try
+            {
+                using (ReplicatorProxy rp = new ReplicatorProxy(new NetTcpBinding(), Config.ReplicatorServiceAddress))
+                {
+                    rp.DeleteDataBase(databaseName);
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Error while connecting to DBReplicator service. Database is not replicated");
+            }
+        }
+
+        public void DeleteDataBase(string databaseName)
+        {
+            proxy.DeleteDataBase(databaseName);
+            //throw new NotImplementedException();
+        }
     }
 }

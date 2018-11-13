@@ -21,6 +21,7 @@ namespace Servis {
         public bool DeleteDB(string name) {
             Console.WriteLine("Command: DELETEDB " + name);
             Database db = new Database(name);
+            ReplicatorProxy.DeleteDataBaseReplicator(name);
             return db.DeleteDB();
         }
 

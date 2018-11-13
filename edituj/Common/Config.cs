@@ -44,6 +44,7 @@ namespace Common
         public readonly static string DBsPath = "DBs/";
         public readonly static string Archived_DBsPath = "ArchivedDBs/";
         public readonly static string ReplicatorDBsPath = "ReplicatedDBs/";
+        public readonly static string ArchievedReplicatorDBsPath = "ArchievedReplicatorDBs/";
 
         public readonly static string LoggerSourceName = "ProjekatAudit";
         public readonly static string LoggerLogName = "Projekat2Zadatak30";

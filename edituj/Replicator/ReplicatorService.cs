@@ -2,6 +2,7 @@
 using DatabaseManager;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;
@@ -36,6 +37,25 @@ namespace Replicator {
                 Database db = new Database(databaseName, Config.ReplicatorDBsPath);
                 db.Elements = allElements;
                 db.ForceSaveToDisk();
+            }
+        }
+
+        public void DeleteDataBase(string databaseName)
+        {
+            databaseName = databaseName + ".xml";
+            try
+            {
+                if (!Directory.Exists(Config.ArchievedReplicatorDBsPath))
+                {
+                    Directory.CreateDirectory(Config.ArchievedReplicatorDBsPath);
+                }
+
+                File.Copy(Config.ReplicatorDBsPath + databaseName, Config.ArchievedReplicatorDBsPath + databaseName);
+                File.Delete(Config.ReplicatorDBsPath + databaseName);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
             }
         }
     }

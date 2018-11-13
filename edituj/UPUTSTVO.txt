@@ -10,4 +10,7 @@
 8. instalirati sertifikate
 	Sign1 i Sign2 -> Personal
 9.posleInstalacijeZaDigPotpis.bat
-10.startuj servis
+10.startuj servis kao admin i visual mora biti pokrenut kao administrator
+11.hakuj u certManageru subjectName="testservis";
+12.startuj servis
+13.pokreni admina i dodaj bazu
