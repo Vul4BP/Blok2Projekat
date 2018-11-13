@@ -17,12 +17,11 @@ namespace Servis
         public static void StartAllServices()
         {
             AdminServiceHost = new AdminService();
-            AdminServiceHost.StartService();
-
             WriterServiceHost = new WriterService();
-            WriterServiceHost.StartService();
-
             ReaderServiceHost = new ReaderService();
+
+            AdminServiceHost.StartService();
+            WriterServiceHost.StartService();
             ReaderServiceHost.StartService();
         }
 
@@ -41,7 +40,6 @@ namespace Servis
             catch(Exception e)
             {
                 Console.WriteLine(e.Message);
-                Console.ReadLine();
             }
             Console.ReadKey();
 

@@ -30,6 +30,12 @@ namespace Servis
             //signCert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, signCertCN);
 
             string srvCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
+
+            if (srvCertCN.ToLower() != "testservis")
+            {
+                throw new Exception("Nisi admir");
+            }
+
             //Console.WriteLine(srvCertCN);
             //srvCertCN = "testservis";
             NetTcpBinding binding = new NetTcpBinding();
@@ -95,13 +101,10 @@ namespace Servis
 
         public void StopService()
         {
-            if (host != null)
-            {
+            if (host != null) { 
                 host.Close();
                 Console.WriteLine(ServiceName + " stopped");
-            }
-            else
-            {
+            } else {
                 Console.WriteLine(ServiceName + " error");
             }
         }

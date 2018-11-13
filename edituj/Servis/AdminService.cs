@@ -13,6 +13,7 @@ using Authorizer;
 using System.Threading;
 using System.ServiceModel.Description;
 using DatabaseManager;
+using Manager;
 
 namespace Servis
 {
@@ -22,7 +23,13 @@ namespace Servis
         string ServiceName = "AdminService";
         CommandExecutor Commandos = new CommandExecutor();
 
-        public void StartService() { 
+        public void StartService() {
+
+            string srvCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
+            if (srvCertCN.ToLower() != "testservis")
+            {
+                throw new Exception("Nisi admir");
+            }
 
             NetTcpBinding binding = new NetTcpBinding();
             binding = HelperFunctions.SetBindingSecurity(binding);
@@ -60,12 +67,10 @@ namespace Servis
 
         public void StopService()
         {
-            if (host != null)
-            {
+            if (host != null) { 
                 host.Close();
                 Console.WriteLine(ServiceName + " stopped");
-            } else
-            {
+            } else {
                 Console.WriteLine(ServiceName + " error");
             }
         }

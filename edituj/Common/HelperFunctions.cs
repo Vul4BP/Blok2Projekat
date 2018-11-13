@@ -16,7 +16,7 @@ namespace Common
             binding.Security.Mode = SecurityMode.Transport;
             binding.Security.Transport.ProtectionLevel = System.Net.Security.ProtectionLevel.EncryptAndSign;
             binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Windows;
-            return binding; 
+            return binding;
         }
 
         public static Tuple<NetTcpBinding, EndpointAddress> PrepBindingAndAddressForWriter(string ServiceCertCN) {
