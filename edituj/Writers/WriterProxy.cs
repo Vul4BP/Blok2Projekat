@@ -19,7 +19,7 @@ namespace Writers
         public WriterProxy(NetTcpBinding binding, EndpointAddress address) : base(binding, address)
         {
             string cltCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
-            //string cltCertCN = "testwriter";
+            //cltCertCN = "testwriter";
             this.Credentials.ServiceCertificate.Authentication.CertificateValidationMode = System.ServiceModel.Security.X509CertificateValidationMode.Custom;
             this.Credentials.ServiceCertificate.Authentication.CustomCertificateValidator = new ClientCertValidator();
             this.Credentials.ServiceCertificate.Authentication.RevocationMode = X509RevocationMode.NoCheck;

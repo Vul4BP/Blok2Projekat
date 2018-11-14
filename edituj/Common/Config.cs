@@ -8,26 +8,28 @@ using System.Threading.Tasks;
 
 namespace Common
 {
+
     public class Config
     {
-        //public readonly static string AdminHost = "10.1.212.165";
-        public readonly static string AdminHost = "localhost";
+        //public readonly static string AdminHost = "10.1.212.176";
+        public readonly static string AdminHost = ReadFromConfig("service");
         public readonly static string AdminPort = "9999";
         public readonly static string AdminEndpoint = "AdminService";
         public readonly static string AdminServiceAddress = "net.tcp://" + AdminHost + ":" + AdminPort + "/" + AdminEndpoint;
 
-        //public readonly static string ReaderWriterHost = "10.1.212.165";
-        public readonly static string WriterHost = "localhost";
+        //public readonly static string WriterHost = "10.1.212.176";
+        public readonly static string WriterHost = ReadFromConfig("service");
         public readonly static string WriterPort = "9998";
         public readonly static string WriterEndpoint = "WriterService";
         public readonly static string WriterServiceAddress = "net.tcp://" + WriterHost + ":" + WriterPort + "/" + WriterEndpoint;
 
-        public readonly static string ReaderHost = "localhost";
+        //public readonly static string ReaderHost = "10.1.212.176";
+        public readonly static string ReaderHost = ReadFromConfig("service");
         public readonly static string ReaderPort = "9997";
         public readonly static string ReaderEndpoint = "ReaderService";
         public readonly static string ReaderServiceAddress = "net.tcp://" + ReaderHost + ":" + ReaderPort + "/" + ReaderEndpoint;
 
-        public readonly static string ReplicatorHost = "localhost";
+        public readonly static string ReplicatorHost = ReadFromConfig("replicator");
         public readonly static string ReplicatorPort = "21001";
         public readonly static string ReplicatorEndpoint = "ReplicatorService";
         public readonly static string ReplicatorServiceAddress = "net.tcp://" + ReplicatorHost + ":" + ReplicatorPort + "/" + ReplicatorEndpoint;
@@ -52,6 +54,36 @@ namespace Common
         public readonly static string WriterSign = "testwriter_sign";
         public readonly static string ServisSign = "testservis_sign";
 
+        public static string ReadFromConfig(string key)
+        {
+            try
+            {
+                using (StreamReader sr = new StreamReader("ipadrese.cfg"))
+                {
+                    string text = sr.ReadToEnd();
+                    foreach (string line in text.Split('\n'))
+                    {
+                        if (line.Contains(key.ToLower() + ":"))
+                        {
+                            string adr = line.Split(':')[1].Trim();
+
+                            if (adr.Length == 0)
+                            {
+                                Console.WriteLine("Adresa za servis nije ispravna");
+                                adr = "localhost";
+                            }
+
+                            return adr;
+                        }
+                    }
+                    return "localhost";
+                }
+            } catch
+            {
+                Console.WriteLine("Nema fajla u kom su ipadrese (ipadrese.cfg)");
+                return "localhost";
+            } 
+        }
 
     }
 

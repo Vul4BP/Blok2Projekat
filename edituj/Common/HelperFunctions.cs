@@ -23,7 +23,7 @@ namespace Common
             NetTcpBinding binding = new NetTcpBinding();
             binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
             /// Use CertManager class to obtain the certificate based on the "srvCertCN" representing the expected service identity.
-            X509Certificate2 srvCert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, ServiceCertCN);
+            X509Certificate2 srvCert = CertManager.GetCertificateFromStorage(StoreName.TrustedPeople, StoreLocation.LocalMachine, ServiceCertCN);
             EndpointAddress address = new EndpointAddress(new Uri(Config.WriterServiceAddress), new X509CertificateEndpointIdentity(srvCert));
             return new Tuple<NetTcpBinding, EndpointAddress>(binding, address);
         }
@@ -33,7 +33,7 @@ namespace Common
             NetTcpBinding binding = new NetTcpBinding();
             binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
             /// Use CertManager class to obtain the certificate based on the "srvCertCN" representing the expected service identity.
-            X509Certificate2 srvCert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, ServiceCertCN);
+            X509Certificate2 srvCert = CertManager.GetCertificateFromStorage(StoreName.TrustedPeople, StoreLocation.LocalMachine, ServiceCertCN);
             EndpointAddress address = new EndpointAddress(new Uri(Config.ReaderServiceAddress), new X509CertificateEndpointIdentity(srvCert));
             return new Tuple<NetTcpBinding, EndpointAddress>(binding, address);
         }
@@ -375,8 +375,8 @@ namespace Common
             {
                 return false;
             }
-            X509Certificate2 clientCertificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, signCert);
-
+            X509Certificate2 clientCertificate = CertManager.GetCertificateFromStorage(StoreName.TrustedPeople, StoreLocation.LocalMachine, signCert);
+            //X509Certificate2 clientCertificate = CertManager.GetCertificateFromStorage(StoreName.TrustedPeople, StoreLocation.LocalMachine, signCert);
             /// Verify signature using SHA1 hash algorithm
             if (DigitalSignature.Verify(s, "SHA1", signature, clientCertificate))
             {
