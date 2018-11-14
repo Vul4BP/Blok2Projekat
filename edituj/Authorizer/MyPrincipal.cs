@@ -12,12 +12,8 @@ namespace Authorizer {
     public class MyPrincipal : IPrincipal
     {
         public IIdentity Identity { get; set; }
-        //public WindowsIdentity WinIdentity { get; set; }
         public Role rola { get; set; }
         
-        //public List<String> ListOfGroups { get; set; }
-        //public Role rola { get; set; }
-
         public MyPrincipal(WindowsIdentity identity)
         {
             rola = new Role(Common.Roles.Unset);

@@ -37,8 +37,7 @@ namespace Authorizer {
             IList<IIdentity> identities = list as IList<IIdentity>;     //provera da li je prosla windows autorizacija
             if (list == null || identities.Count <= 0) {
                 return false;
-            }
-            
+            }           
             //ako je proslo, kreira se principal
             evaluationContext.Properties["Principal"] = GetPrincipal(identities[0]);
             return true;

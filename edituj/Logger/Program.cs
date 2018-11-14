@@ -10,7 +10,7 @@ namespace Logger
     {
         static void Main(string[] args)
         {
-            Audit.LogAuthenticationSuccess("PRVI INIT TEST");
+            Audit.LogAuthenticationSuccess("PRVI INIT TEST");   //Mora da bi se aktivirao eventLog
         }
     }
 }

@@ -18,16 +18,12 @@ namespace Common
         Tuple<bool,byte[]> WriteDB(string name, Element element);
         [OperationContract]
         Tuple<bool, byte[]> EditDB(string name, Element element);
-        //Element
         [OperationContract]
         Tuple<List<Element>,byte[]> ReadDB(string name);
-        //float
         [OperationContract]
         Tuple<float,byte[]> MedianMonthlyIncomeByCity(string name, string city);
-        //float
         [OperationContract]
         Tuple<float, byte[]> MedianMonthlyIncome(string name, string country, int year);
-        //list<Element>
         [OperationContract]
         Tuple<Dictionary<string, Element>,byte[]> MaxIncomeByCountry(string name);
     }

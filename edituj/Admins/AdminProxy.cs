@@ -12,7 +12,6 @@ namespace Admins
     public class AdminProxy : ChannelFactory<IMainService>, IMainService, IDisposable
     {
         IMainService factory;
-        //ChannelFactory<IMainService> factory;
 
         public AdminProxy(NetTcpBinding binding, string address) : base(binding, address)
         {
@@ -54,7 +53,6 @@ namespace Admins
 
         public bool EditDB(string name, Element element)
         {
-            //throw new NotImplementedException();
             bool retVal = false;
             try
             {
@@ -71,10 +69,8 @@ namespace Admins
         public Dictionary<string, Element> MaxIncomeByCountry(string name)
         {
             Dictionary<string, Element> maxIncome = new Dictionary<string, Element>();
-            // bool retVal = false;
             try
             {
-                //throw new NotImplementedException();    //OVA FALI JOS
                 maxIncome = factory.MaxIncomeByCountry(name);
             }
             catch (Exception e)
@@ -87,11 +83,10 @@ namespace Admins
         public float MedianMonthlyIncomeByCity(string name,string city)
         {
             float retMedianMonthly = 0;
-            //bool retVal = false;
             try
             {
                 retMedianMonthly = factory.MedianMonthlyIncomeByCity(name,city);
-                //retVal = true;
+
             }
             catch (Exception e)
             {
@@ -102,12 +97,10 @@ namespace Admins
 
         public float MedianMonthlyIncome(string name,string country, int year)
         {
-            //bool retVal = false;
             float retMedianMonthly = 0;
             try
             {
                 retMedianMonthly = factory.MedianMonthlyIncome(name,country, year);
-                // retVal = true;
             }
             catch (Exception e)
             {
@@ -119,11 +112,9 @@ namespace Admins
         public List<Element> ReadDB(string name)
         {
             List<Element> elements = new List<Element>();
-            //bool retVal = false;
             try
             {
                 elements = factory.ReadDB(name);
-                //retVal = true;
             }
             catch (Exception e)
             {

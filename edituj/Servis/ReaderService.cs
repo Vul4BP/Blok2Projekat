@@ -26,17 +26,12 @@ namespace Servis
 
         public void StartService()
         {
-            //string signCertCN = "testservis_sign";
-            //signCert = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, signCertCN);
-
             string srvCertCN = Formatter.ParseName(WindowsIdentity.GetCurrent().Name);
             if (srvCertCN.ToLower() != "testservis")
             {
                 throw new Exception("Nisi admir");
             }
 
-            //Console.WriteLine(srvCertCN);
-            //srvCertCN = "testservis";
             NetTcpBinding binding = new NetTcpBinding();
             binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
 

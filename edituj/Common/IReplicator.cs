@@ -12,7 +12,6 @@ namespace Common
     {
         [OperationContract]
         void SendElements(string databaseName, Dictionary<int, Element> allElements);
-        //mozda implementirati da kad se obrise baza da je i replikator obrise?
         [OperationContract]
         void DeleteDataBase(string databaseName);
     }

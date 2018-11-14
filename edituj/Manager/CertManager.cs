@@ -22,7 +22,6 @@ namespace Manager
         {
             X509Store store = new X509Store(storeName, storeLocation);
             store.Open(OpenFlags.ReadOnly);
-
             //subjectName = "testservis";
             X509Certificate2Collection certCollection = store.Certificates.Find(X509FindType.FindBySubjectName, subjectName, true);
 
@@ -37,8 +36,6 @@ namespace Manager
 
             return null;
         }
-
-
         /// <summary>
         /// Get a certificate from the specified .pfx file		
         /// </summary>

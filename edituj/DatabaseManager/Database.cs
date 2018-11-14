@@ -28,7 +28,6 @@ namespace DatabaseManager
             get { return databaseArchivePath; }
             set { databaseArchivePath = value; }
         }
-        //trebace negde if (!Directory.Exists(@"C:\my\dir")) Directory.CreateDirectory(@"C:\my\dir");
 
         public Database(string name)
         {
@@ -46,7 +45,6 @@ namespace DatabaseManager
         {
             SaveToDisk();
         }
-        //citanje
         public List<Element> ElementsToList()
         {
             return Elements.Values.ToList();
@@ -234,8 +232,6 @@ namespace DatabaseManager
             }
             catch
             {
-                //Console.WriteLine(e.Message);
-                //Console.WriteLine("Database LoadFromDisk: " + e.ToString());
                 return new Dictionary<int, Element>();
             }
 

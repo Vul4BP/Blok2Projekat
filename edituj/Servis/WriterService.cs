@@ -31,8 +31,6 @@ namespace Servis
                 throw new Exception("Nisi admir");
             }
 
-            //Console.WriteLine(srvCertCN);
-            //srvCertCN = "testservis";
             NetTcpBinding binding = new NetTcpBinding();
             binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Certificate;
 

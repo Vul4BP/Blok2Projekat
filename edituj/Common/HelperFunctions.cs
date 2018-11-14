@@ -7,6 +7,7 @@ using System.ServiceModel;
 using System.Security.Cryptography.X509Certificates;
 using Manager;
 using System.Text.RegularExpressions;
+using System.IO;
 
 namespace Common
 {
@@ -147,7 +148,6 @@ namespace Common
             int age = Int32.Parse(name);
             return age;
         }
-
         public static float ReadIncome()
         {
             Console.WriteLine("Unesi zaradu:");
@@ -161,7 +161,6 @@ namespace Common
             float income = float.Parse(name);
             return income;
         }
-
         public static string ReadCity() {
             Console.WriteLine("Unesi naziv grada:");
             string name = Console.ReadLine().Trim();
@@ -376,7 +375,6 @@ namespace Common
                 return false;
             }
             X509Certificate2 clientCertificate = CertManager.GetCertificateFromStorage(StoreName.TrustedPeople, StoreLocation.LocalMachine, signCert);
-            //X509Certificate2 clientCertificate = CertManager.GetCertificateFromStorage(StoreName.TrustedPeople, StoreLocation.LocalMachine, signCert);
             /// Verify signature using SHA1 hash algorithm
             if (DigitalSignature.Verify(s, "SHA1", signature, clientCertificate))
             {
@@ -443,6 +441,38 @@ namespace Common
                 return Permissions[action];
             }
             throw new Exception("Action invalid name:" + action);
+        }
+
+        public static string ReadFromConfig(string key)
+        {
+            try
+            {
+                using (StreamReader sr = new StreamReader("ipadrese.cfg"))
+                {
+                    string text = sr.ReadToEnd();
+                    foreach (string line in text.Split('\n'))
+                    {
+                        if (line.Contains(key.ToLower() + ":"))
+                        {
+                            string adr = line.Split(':')[1].Trim();
+
+                            if (adr.Length == 0)
+                            {
+                                Console.WriteLine("Adresa za servis nije ispravna");
+                                adr = "localhost";
+                            }
+
+                            return adr;
+                        }
+                    }
+                    return "localhost";
+                }
+            }
+            catch
+            {
+                Console.WriteLine("Nema fajla u kom su ipadrese (ipadrese.cfg)");
+                return "localhost";
+            }
         }
     }
 }

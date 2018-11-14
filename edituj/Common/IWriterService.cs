@@ -18,16 +18,12 @@ namespace Common
         bool WriteDB(string name, Element element, byte[] signature);
         [OperationContract]
         bool EditDB(string name, Element element, byte[] signature);
-        //Element
         [OperationContract]
         List<Element> ReadDB(string name, byte[] signature);
-        //float
         [OperationContract]
         float MedianMonthlyIncomeByCity(string name, string city, byte[] signature);
-        //float
         [OperationContract]
         float MedianMonthlyIncome(string name, string country, int year, byte[] signature);
-        //list<Element>
         [OperationContract]
         Dictionary<string, Element> MaxIncomeByCountry(string name, byte[] signature);
     }

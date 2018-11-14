@@ -35,13 +35,10 @@ namespace Manager
 
             UnicodeEncoding encoding = new UnicodeEncoding();
             byte[] data = encoding.GetBytes(message);
-            //byte[] data = ObjectToByteArray(ts);
             byte[] hash = sha1.ComputeHash(data);
-            //int h1 = ts.GetHashCode();
 
             /// Use RSACryptoServiceProvider support to create a signature using a previously created hash value
             byte[] signature = csp.SignHash(hash, CryptoConfig.MapNameToOID("SHA1"));
-            //Console.WriteLine("Signature created");
             return signature;
         }
 
@@ -56,7 +53,6 @@ namespace Manager
             byte[] data = encoding.GetBytes(message);
             //byte[] data = ObjectToByteArray(ts);
             byte[] hash = sha1.ComputeHash(data);
-
 
             /// Use RSACryptoServiceProvider support to compare two - hash value from signature and newly created hash value			
             return csp.VerifyHash(hash, CryptoConfig.MapNameToOID("SHA1"), signature);

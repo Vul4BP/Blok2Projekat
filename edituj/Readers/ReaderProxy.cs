@@ -23,7 +23,6 @@ namespace Readers
             this.Credentials.ServiceCertificate.Authentication.CertificateValidationMode = System.ServiceModel.Security.X509CertificateValidationMode.Custom;
             this.Credentials.ServiceCertificate.Authentication.CustomCertificateValidator = new ClientCertValidator();
             this.Credentials.ServiceCertificate.Authentication.RevocationMode = X509RevocationMode.NoCheck;
-
             /// Set appropriate client's certificate on the channel. Use CertManager class to obtain the certificate based on the "cltCertCN"
             this.Credentials.ClientCertificate.Certificate = CertManager.GetCertificateFromStorage(StoreName.My, StoreLocation.LocalMachine, cltCertCN);
 
@@ -32,15 +31,13 @@ namespace Readers
 
         public Tuple<bool,byte[]> CreateDB(string name)
         {
-            //bool retVal = false;
             Tuple<bool, byte[]> rVal = new Tuple<bool, byte[]>(false, null);
             try
             {
                 rVal = factory.CreateDB(name);
                 if (!HelperFunctions.ValidateSignature(name, rVal.Item2, Config.ServisSign))
                 {
-                    //Console.WriteLine("")
-                    //rVal = new Tuple<bool, byte[]>(false, null);
+                    Console.WriteLine("Potpis nije validan");
                 }
             }
             catch (Exception e)
@@ -58,8 +55,7 @@ namespace Readers
                 rVal = factory.DeleteDB(name);
                 if (!HelperFunctions.ValidateSignature(name, rVal.Item2, Config.ServisSign))
                 {
-                    //Console.WriteLine("")
-                    //rVal = new Tuple<bool, byte[]>(false, null);
+                    Console.WriteLine("Potpis nije validan");
                 }
             }
             catch (Exception e)
@@ -77,8 +73,7 @@ namespace Readers
                 rVal = factory.EditDB(name,element);
                 if (!HelperFunctions.ValidateSignature(name, rVal.Item2, Config.ServisSign))
                 {
-                    //Console.WriteLine("")
-                    //rVal = new Tuple<bool, byte[]>(false,null);
+                    Console.WriteLine("Potpis nije validan");
                 }
             }
             catch (Exception e)
@@ -96,8 +91,7 @@ namespace Readers
                 rVal = factory.MaxIncomeByCountry(name);
                 if (!HelperFunctions.ValidateSignature(name, rVal.Item2, Config.ServisSign))
                 {
-                    //Console.WriteLine("")
-                    //rVal = new Tuple<Dictionary<string, Element>, byte[]>(new Dictionary<string, Element>(), null);
+                    Console.WriteLine("Potpis nije validan");
                 }
             }
             catch (Exception e)
@@ -115,8 +109,7 @@ namespace Readers
                 rVal = factory.MedianMonthlyIncomeByCity(name, city);
                 if (!HelperFunctions.ValidateSignature(name, rVal.Item2, Config.ServisSign))
                 {
-                    //Console.WriteLine("")
-                    //rVal = new Tuple<float, byte[]>(-1, null);
+                    Console.WriteLine("Potpis nije validan");
                 }
             }
             catch (Exception e)
@@ -134,8 +127,7 @@ namespace Readers
                 rVal = factory.MedianMonthlyIncome(name, country, year);
                 if (!HelperFunctions.ValidateSignature(name, rVal.Item2, Config.ServisSign))
                 {
-                    //Console.WriteLine("")
-                    //rVal = new Tuple<float, byte[]>(-1, null);
+                    Console.WriteLine("Potpis nije validan");
                 }
             }
             catch (Exception e)
@@ -153,8 +145,7 @@ namespace Readers
                 rVal = factory.ReadDB(name);
                 if (!HelperFunctions.ValidateSignature(name, rVal.Item2, Config.ServisSign))
                 {
-                    //Console.WriteLine("")
-                    //rVal = new Tuple<List<Element>, byte[]>(new List<Element>(), null);
+                    Console.WriteLine("Potpis nije validan");
                 }
             }
             catch (Exception e)
@@ -172,8 +163,7 @@ namespace Readers
                 rVal = factory.WriteDB(name,element);
                 if (!HelperFunctions.ValidateSignature(name, rVal.Item2, Config.ServisSign))
                 {
-                    //Console.WriteLine("")
-                    //rVal = new Tuple<bool, byte[]>(false, null);
+                    Console.WriteLine("Potpis nije validan");
                 }
             }
             catch (Exception e)

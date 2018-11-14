@@ -48,7 +48,6 @@ namespace Servis {
         public void DeleteDataBase(string databaseName)
         {
             proxy.DeleteDataBase(databaseName);
-            //throw new NotImplementedException();
         }
     }
 }
