@@ -16,7 +16,6 @@ namespace Admins
         public AdminProxy(NetTcpBinding binding, string address) : base(binding, address)
         {
             binding = HelperFunctions.SetBindingSecurity(binding);
-            this.Credentials.Windows.AllowedImpersonationLevel = System.Security.Principal.TokenImpersonationLevel.Impersonation;
             factory = this.CreateChannel();
 
         }
