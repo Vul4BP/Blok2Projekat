@@ -17,6 +17,9 @@ namespace Common
             binding.Security.Mode = SecurityMode.Transport;
             binding.Security.Transport.ProtectionLevel = System.Net.Security.ProtectionLevel.EncryptAndSign;
             binding.Security.Transport.ClientCredentialType = TcpClientCredentialType.Windows;
+		  
+		  binding.ReceiveTimeout = TimeSpan.FromMinutes(30);
+		  binding.SendTimeout = TimeSpan.FromMinutes(30);
             return binding;
         }
 
@@ -26,6 +29,10 @@ namespace Common
             /// Use CertManager class to obtain the certificate based on the "srvCertCN" representing the expected service identity.
             X509Certificate2 srvCert = CertManager.GetCertificateFromStorage(StoreName.TrustedPeople, StoreLocation.LocalMachine, ServiceCertCN);
             EndpointAddress address = new EndpointAddress(new Uri(Config.WriterServiceAddress), new X509CertificateEndpointIdentity(srvCert));
+		  
+		  binding.ReceiveTimeout = TimeSpan.FromMinutes(30);
+		  binding.SendTimeout = TimeSpan.FromMinutes(30);
+		  
             return new Tuple<NetTcpBinding, EndpointAddress>(binding, address);
         }
 
@@ -36,6 +43,10 @@ namespace Common
             /// Use CertManager class to obtain the certificate based on the "srvCertCN" representing the expected service identity.
             X509Certificate2 srvCert = CertManager.GetCertificateFromStorage(StoreName.TrustedPeople, StoreLocation.LocalMachine, ServiceCertCN);
             EndpointAddress address = new EndpointAddress(new Uri(Config.ReaderServiceAddress), new X509CertificateEndpointIdentity(srvCert));
+		  
+		  binding.ReceiveTimeout = TimeSpan.FromMinutes(30);
+		  binding.SendTimeout = TimeSpan.FromMinutes(30);
+		  
             return new Tuple<NetTcpBinding, EndpointAddress>(binding, address);
         }
 
