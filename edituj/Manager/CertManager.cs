@@ -25,16 +25,33 @@ namespace Manager
             //subjectName = "testservis";
             X509Certificate2Collection certCollection = store.Certificates.Find(X509FindType.FindBySubjectName, subjectName, true);
 
+            string name = String.Empty;
             /// Check whether the subjectName of the certificate is exactly the same as the given "subjectName"
             foreach (X509Certificate2 c in certCollection)
             {
-                if (c.SubjectName.Name.Contains("CN=" + subjectName.ToLower()))
+                name = CertManager.GetCertName(c.Subject);
+
+                if (name.Equals("CN=" + subjectName.ToLower()))
                 {
                     return c;
                 }
             }
 
             return null;
+        }
+
+        public static string GetCertName(string n)
+        {
+            string name = String.Empty;
+
+            if (n.Contains(','))
+            {
+                return name = n.Split(',')[0];
+            }
+            else
+            {
+                return name = n;
+            }
         }
         /// <summary>
         /// Get a certificate from the specified .pfx file		

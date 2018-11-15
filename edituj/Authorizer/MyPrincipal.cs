@@ -18,6 +18,9 @@ namespace Authorizer {
         {
             rola = new Role(Common.Roles.Unset);
             Identity = identity;
+
+            Console.WriteLine(identity.AuthenticationType);
+
             if (Identity != null)
             {
                 //ULAZI AKO JE ADMINS, TJ AKO JE WIN IDENTITY
